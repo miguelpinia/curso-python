@@ -13,4 +13,4 @@ El temario del curso se encuentra disponible en [[file:temario.org][la siguiente
 
 *Atentamente:*
 
-Miguel Piña ([[https://twitter.com/MiguelPinia][@MiguelPinia]])
+Miguel Piña ([[https://github.com/miguelpinia][@MiguelPinia]])

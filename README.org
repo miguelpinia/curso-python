@@ -1,8 +1,7 @@
-#+title: Readme
+#+title: Python
 #+author: Miguel Piña
 #+date: [2016-06-12 dom 18:43]
 
-* Introducción
 
 En este repositorio se subirá todo el material del curso de Python impartido en
 la Facultad de Ciencias.
@@ -10,6 +9,8 @@ la Facultad de Ciencias.
 La mayoría del material será en formato org-mode y proyectos hechos vía
 virtualenv, para facilitar su reproducción.
 
+El temario del curso se encuentra disponible en [[file:temario.org][la siguiente liga.]]
+
 *Atentamente:*
 
-Miguel Piña (@MiguelPinia)
+Miguel Piña ([[https://twitter.com/MiguelPinia][@MiguelPinia]])

@@ -1,0 +1,91 @@
+#+title: Temario Python
+#+author: Miguel Piña
+#+date: [2016-05-05 jue 10:23]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+
+* Objetivo
+
+El objetivo del curso es obtener conocimiento básico acerca de python y las distintas
+herramientas que lo componen. Así como su sintaxis y semántica para ser utilizado para
+resolver problemas de distintas índoles.
+
+* Herramientas a usar
+
+En el curso se usará python 2.7, así como Emacs como editor y virtualenv como
+gestor de entornos virtuales.
+
+* Condiciones para tomar el curso
+
+Es necesario que el alumno conozca al menos un lenguaje de programación para
+tomar el curso, ya que muchos conceptos relacionados con programación
+estructurada y/o programación orientada a objetos se darán por hecho que ya se
+conocen.
+
+Además es altamente recomendable que el alumno sepa manejar al menos de manera
+básica el editor Emacs.
+
+* Temario
+** Introducción (3 horas).
+  - ¿Qué es python?
+    + Breve introducción histórica de Python
+    + Filosofía de Python
+    + Principios y Zen de Python
+  - Intérprete de python
+  - Configuración del entorno de desarrollo (emacs)
+  - Scripts y evaluación /on live/
+
+** Tipos de datos (1 hora)
+  - Númericos
+  - Booleanos
+  - Cadenas
+  - Listas
+  - Tuplas
+  - Conjuntos
+  - Diccionarios
+
+** Controles de flujo (1 hora)
+  - If - Else If
+  - While
+  - For
+
+** Módulos y paquetes (1 hora)
+  - ¿Como trabajan los módulos?
+  - Manejando el código a través de paquetes
+
+** Entrada y salida (1 hora)
+  - Lectura de archivos de texto
+  - Escritura de archivos de texto
+  - Manejo de otros formatos (csv, excel)
+
+
+** Introducción a la programación orientada a objetos con python (4 horas)
+  - Clases y objetos
+  - Herencia
+  - Polimorfismo
+  - Encapsulamiento
+  - Manejo de excepciones
+
+** Introducción a la programación funcional (4 horas)
+  - ¿Qué son las funciones?
+  - Estructura de una función
+  - Generadores
+  - Yield
+  - Built-in functions
+  - Listas por comprensión
+  - Funciones lambda
+  - Map
+  - Filter
+  - Reduce
+
+
+** Herramientas para la programación científica (4 horas)
+  - Numpy
+  - Scipy
+  - Matplolib (pyplot)
+  - Pandas
+
+** Compatibilidad con otros lenguajes (2 horas)
+  - C
+  - Java
+  - Hylang

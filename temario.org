@@ -26,7 +26,7 @@ Además es altamente recomendable que el alumno sepa manejar al menos de manera
 básica el editor Emacs.
 
 * Temario
-** [[file:introduccion/introduccion.tex][Introducción]] (3 horas).
+** [[file:introduccion/introduccion.org][Introducción]] (3 horas).
   - [[file:introduccion/introduccion.org::*%C2%BFQu%C3%A9%20es%20python?][¿Qué es python?]]
     + [[file:introduccion/introduccion.org::*Historia][Breve introducción histórica de Python]]
     + [[file:introduccion/introduccion.org::*Filosof%C3%ADa%20de%20python][Filosofía de Python]]

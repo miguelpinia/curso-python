@@ -32,7 +32,7 @@ básica el editor Emacs.
     + [[file:introduccion/introduccion.org#Filosof%C3%ADa-de-python][Filosofía de Python]]
     + [[file:introduccion/introduccion.org#zen-de-python][Principio y Zen de Python]]
   - [[file:introduccion/introduccion.org#int%C3%A9rprete-de-python][Intérprete de Python]]
-  - Configuración del entorno de desarrollo (emacs)
+  - [[file:sesion2/sesion2.org][Configuración del entorno de desarrollo (emacs)]]
   - Scripts y evaluación /on live/
 
 ** Tipos de datos (1 hora)

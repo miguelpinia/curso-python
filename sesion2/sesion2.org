@@ -1,0 +1,287 @@
+#+title: Configuración de Emacs
+#+author: Miguel Piña
+#+date: [2016-06-13 lun 10:15]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* ¿Por qué usar Emacs?
+
+- Es software libre.
+- Es el editor más avanzado.
+- Me permite agregar nuevas características acordes a
+  mis necesidades.
+- Facilitar mi trabajo con la edición de textos.
+- Tener una aplicación adaptada a mi.
+- Mejorar la forma en que interactuó con los lenguajes de
+  programación.
+- Sólo "un" editor para todos los lenguajes.
+- Aumentar mi productividad
+
+* Falso mitos de Emacs
+
+- Es muy pesado
+- Está desactualizado y no tiene lo que los modernos editores
+- Hay que aprenderse un montón de combinaciones de teclas
+- Te rompes el pulgar
+- Yo solo necesito un editor no un montón de programas
+- Curva de aprendizaje alta
+- Es mejor vim porque está en todas partes
+- Emacs es menos poderoso que un IDE
+
+* Aprendiendo Emacs
+
+Iniciemos con el tutorial de emacs
+
+Help -> Emacs Tutorial
+
+*Recordemos: C-<key> = Control + tecla*
+            *M-<key> = Alt + tecla*
+
+En caso de querer hacerlo vía keybindings
+
+#+BEGIN_CENTER
+C-h t
+#+END_CENTER
+
+* Aprendiendo comandos básicos de emacs
+
+- C-x C-f :: Abrir archivo
+- C-x C-s :: Guardar archivo
+- C-x C-c :: Salir de emacs
+- M-SPC :: Seleccionar texto
+- C-w :: Cortar texto
+- M-w :: Copiar texto
+- C-x u | C-/ :: Deshacer
+
+* Conceptos
+
+- [X] Window
+- [X] Buffer
+- [X] Frame
+- [X] Minibuffer
+- [X] Modeline
+
+* Manejo de buffers y ventanas
+
+- C-x b :: Intercambia de buffer
+- C-x 2 :: Divide horizontalmente
+- C-x 3 :: Divide verticalmente
+- C-x 1 :: Cierra las otras ventanas
+
+
+* Extender y personalizar
+
+- M-x load-theme Ret :: Cambiar el tema de emacs
+- M-x customize-group :: Editar opciones comunes
+- M-x customize-face :: Editar el comportamiento de los
+     temas
+- M-x list-packages :: Instala un montón de paquetes
+
+Estos comandos solo están activos durante la sesión de
+emacs.
+
+Si queremos mantener cambios cada vez que abrimos una
+sesión de emacs, hay que editar el siguiente archivo:
+
+#+BEGIN_CENTER
+~/.emacs.d/init.el
+#+END_CENTER
+
+* Editando init.el
+Lo primero a definir dentro del archivo /init.el/, son
+los repositorios desde donde vamos a agregar paquetes
+para extender las funcionalidades de emacs.
+
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("tromey" . "http://tromey.com/elpa/") t)
+(add-to-list 'package-archives
+	     '("elpa" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+            '("melpa" . "http://melpa.milkbox.net/packages/") t)
+#+end_src
+
+Para probar los cambios que se realizaron, hay que
+ejecutar la siguiente instrucción:
+
+
+- M-x eval-buffer :: Evalua el buffer y lo carga dentro
+     de las funcionalidades de emacs.
+- M-x package-list-packages :: Muestra los paquetes
+     disponibles a instalación
+
+* Editando init.el
+
+Una vez definidos los repositorios, hay que indicar
+cuales van a ser los paquetes que vamos a instalar para
+poder trabajar con Python, así como una serie de
+configuraciones básicas para hacer de nuestro editor
+algo más agradable para nosotros.
+
+#+BEGIN_SRC emacs-lisp
+(package-initialize)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+(defvar my-packages
+  '(python-mode py-autopep8 magit
+    yasnippet jedi auto-complete helm
+    autopair projectile flymake flycheck))
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+#+END_SRC
+
+* Editando init.el
+
+Continuando con la configuración del archivo de
+personalización de emacs, agregamos la siguiente
+configuración:
+
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode) ;; Establece el número de linea del lado izquierdo.
+(setq column-number-mode t) ;; Pone el número de linea y columna en el modeline.
+(setq-default frame-title-format "%b (%f)") ;; Cambiamos el título del Frame.
+(global-hl-line-mode 1) ;; Resalta la linea actual.
+(show-paren-mode 1) ;; Resalta el apareamiento de parentesis, llaves, etc.
+(require 'flycheck) ;; Permite la verificación de la sintaxis al "vuelo".
+(global-flycheck-mode t)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp) ;; Actualizamos la forma de buscar
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+(setq-default indent-tabs-mode nil)
+(setq
+ x-select-enable-clipboard t
+ x-select-enable-primary t
+ save-interprogram-paste-before-kill t
+ apropos-do-all t
+ mouse-yank-at-point t)
+#+END_SRC
+
+* Editando init.el
+
+Creamos respaldos automáticos y la posición donde te
+quedaste en cada uno de los archivos.
+#+begin_src emacs-lisp
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "backups"))))
+(setq auto-save-default nil)
+(setq-default save-place t)
+(setq save-place-file (concat user-emacs-directory "places"))
+#+end_src
+* Editando init.el
+
+Una buena práctica es evitar dejar espacios en blanco
+innecesarios.  A continuación la configuración para
+quitar esos espacios al guardar.
+
+#+begin_src emacs-lisp
+(add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
+(add-hook 'python-mode-hook 'hc-highlight-trailing-whitespace)
+(add-hook 'prog-mode-hook 'hc-highlight-trailing-whitespace)
+(add-hook 'prog-mode-hook
+           (lambda ()
+             (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-to-list 'write-file-functions 'delete-blank-lines)))
+#+end_src
+
+* Editando init.el
+
+Resaltado de caracteres a partir de la columna 80.
+#+begin_src emacs-lisp
+(add-hook 'python-mode-hook 'column-enforce-mode)
+(add-hook 'prog-mode-hook 'column-enforce-mode)
+#+end_src
+Comentarios
+#+begin_src emacs-lisp
+;; Comentarios
+(defun toggle-comment-on-line ()
+  "Comenta o descomenta la línea actual."
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+(global-set-key (kbd "C-;") 'toggle-comment-on-line)
+#+end_src
+
+- Otros
+
+#+begin_src emacs-lisp
+(setq create-lockfiles nil)
+(setq inhibit-startup-message t)
+#+end_src
+
+* Editando init.el
+*Autocompletado*
+#+begin_src emacs-lisp
+(require 'auto-complete)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/custom/dict")
+(set-default 'ac-sources
+             '(ac-source-abbrev
+               ac-source-dictionary
+               ac-source-yasnippet
+               ac-source-words-in-buffer
+               ac-source-words-in-same-mode-buffers
+               ac-source-semantic))
+(ac-config-default)
+(dolist (m '(c-mode c++-mode java-mode org-mode))
+  (add-to-list 'ac-modes m))
+(global-auto-complete-mode t)
+(setq ac-auto-start 2);; auto-complete mode extra settings
+(setq ac-use-overriding-local-map nil)
+(setq ac-use-menu-map t)
+(setq ac-candidate-limit 20)
+#+end_src
+
+* Editando init.el
+
+*Usando helm*
+
+#+begin_src emacs-lisp
+(require 'helm)
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.b
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using
+(setq helm-M-x-fuzzy-match t)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x b") 'helm-mini)
+#+end_src
+
+* Editando init.el
+
+#+BEGIN_SRC emacs-lisp
+(require 'py-autopep8);; Las reglas de buena escritura de código.
+(require 'autopair);; Pareamiento automático de paréntesis y otros.
+(require 'yasnippet);; Snippets de código.
+(require 'jedi);; Herramientas para trabajar con python dinámicamente
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(setq py-electric-colon-active t)
+(add-hook 'python-mode-hook 'autopair-mode)
+(add-hook 'python-mode-hook 'yas-minor-mode)
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (linum-mode 0)
+	    (jedi:setup)
+	    (jedi:ac-setup)
+            (local-set-key "\C-cd" 'jedi:show-doc)
+            (local-set-key (kbd "M-SPC") 'jedi:complete)
+            (local-set-key (kbd "M-.") 'jedi:goto-definition)))
+(add-hook 'python-mode-hook 'auto-complete-mode)
+(add-hook 'inferior-python-mode-hook (lambda ()
+                                       (linum-mode 0)))
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+(setq py-autopep8-options '("--max-line-length=100"))
+(setq py-autopep8-options '("--inplace"))
+(setq py-autopep8-options '("--aggressive"))
+(setq py-autopep8-options '("--aggressive"))
+(setq jedi:complete-on-dot t)
+#+END_SRC

@@ -27,11 +27,11 @@ básica el editor Emacs.
 
 * Temario
 ** [[file:introduccion/introduccion.org][Introducción]] (3 horas).
-  - [[file:introduccion/introduccion.org::*%C2%BFQu%C3%A9%20es%20python?][¿Qué es python?]]
-    + [[file:introduccion/introduccion.org::*Historia][Breve introducción histórica de Python]]
-    + [[file:introduccion/introduccion.org::*Filosof%C3%ADa%20de%20python][Filosofía de Python]]
-    + [[file:introduccion/introduccion.org::*Zen%20de%20python][Principio y Zen de Python]]
-  - [[file:introduccion/introduccion.org::*Int%C3%A9rprete%20de%20Python][Intérprete de Python]]
+  - [[file:introduccion/introduccion.org#qu%C3%A9-es-python][¿Qué es python?]]
+    + [[file:introduccion/introduccion.org#historia][Breve introducción histórica de Python]]
+    + [[file:introduccion/introduccion.org#Filosof%C3%ADa-de-python][Filosofía de Python]]
+    + [[file:introduccion/introduccion.org#zen-de-python][Principio y Zen de Python]]
+  - [[file:introduccion/introduccion.org#int%C3%A9rprete-de-python][Intérprete de Python]]
   - Configuración del entorno de desarrollo (emacs)
   - Scripts y evaluación /on live/
 

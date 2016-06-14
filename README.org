@@ -11,6 +11,9 @@ virtualenv, para facilitar su reproducción.
 
 El temario del curso se encuentra disponible en [[file:temario.org][la siguiente liga.]]
 
+La configuración que hemos construido en la sesión 2, se puede consultar en el
+siguiente [[file:sesion2/init.el][archivo.]]
+
 *Atentamente:*
 
 Miguel Piña ([[https://github.com/miguelpinia][@MiguelPinia]])

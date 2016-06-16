@@ -1,0 +1,267 @@
+#+title: Tipos en python
+#+author: Miguel Piña
+#+date: [2016-06-14 mar 07:31]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Tipos de datos primitivos
+
+- Booleanos
+- Numéricos
+- Cadenas
+- Listas
+- Tuplas
+- Conjuntos
+- Diccionarios
+
+* Tipos booleanos
+
+En python cualquier objeto puede ser probado a
+verdadero, el cuál se puede usar dentro de las
+condicionales de un *if* o un *while* (los cuales
+hablaremos de ellos más adelante). Los siguiente
+objetos son considerados falsos:
+
+- None
+- False
+- Cero (de cualquier tipo numérico)
+- Cualquier secuencia vacía ('', (), [])
+- Cualquier diccionario vacío ({})
+
+* Operaciones booleanas
+
+Las operaciones booleanas definidas dentro de python
+son las siguientes:
+
+- not :: Negación del objeto evaluado
+- and :: Evaluación Y
+- or :: Evaluación Ó
+
+Nota: Los dos últimos son operadores de
+corto-circuito. Es decir, para el *and*, si el primer
+operando se evalua a falso, toda la expresión se evalua
+a falso. En el caso del *or* si el primer operando se
+evalua a verdadero, toda la expresión se evalua a
+verdadero.
+
+* Comparaciones
+
+En python, las operaciones de comparación son
+soportadas por todos los objetos. Estas operaciones son
+las siguientes:
+
+- < :: Menor qué
+- <= :: Menor o igual que
+- > :: Mayor qué
+- >= :: Mayor o igual que
+- == :: Igual a
+- != :: No es igual a
+- is :: Identidad del objeto
+- is not :: Negación de la identidad
+
+
+* Tipos numéricos
+
+En python vamos a tener 4 tipos numéricos soportados:
+
+- int :: Los números enteros son implementados
+     simplemente usando long en C, los cuáles tienen
+     una precisión de 32 bits.
+- float :: Los números flotantes
+- long :: Los números de tipo Long tiene precisión
+     ilimitada
+- complex :: Tienen una parte real y una parte
+     imaginaria, los cuales para usarlos basta con
+     extraerlos usando z.real y z.imag.
+
+* Sintaxis
+
+Los tipos anteriores basta con definirlos como
+literales, pero los que tienen una sintaxis especial
+son los long y los complex.
+
+Para representar un elemento de tipo long basta con
+escribir:
+
+#+BEGIN_CENTER
+kL
+#+END_CENTER
+
+Donde *k* es un número. Para los números complejos se escriben así:
+
+#+BEGIN_CENTER
+K + Pj
+#+END_CENTER
+
+Donde *K* es un número real y *P* es un número imaginario
+
+* Operaciones
+
+Las operaciones definidas sobre estos tipos de datos son las siguientes:
+
+- x + y :: Suma
+- x - y :: Resta
+- x * y :: Multiplicación
+- x / y :: División
+- x // y :: División (piso)
+- x % y :: Residuo
+- -x :: Negación
+- abs(x) :: Valor absoluto
+- int(x) :: Cast a entero
+- long(x) :: Cast a Long
+- float(x) :: Cast a Float
+- complex(re,im) :: Cast a número complejo
+- c.conjugate() :: Conjunto del número complejo (identidad en los números reales)
+- divmod(x, y) :: (x//y, x % y)
+- pow(x, y) :: x elevado a la y
+- x ** y :: x elevado a la y
+
+
+* Cadenas
+
+Las cadenas en python son similares a las definidas en
+otros lenguajes de programación:
+
+#+BEGIN_SRC python
+cadena = "Esta es una cadena en python"
+#+END_SRC
+
+* Funciones para cadenas
+
+Las siguientes operaciones están definidas para la
+manipulación de cadenas:
+
+- str.capitalize() :: Transforma el primer caracter a
+     mayúsculas, dejando los demás caracteres en
+     minúsculas.
+- str.count(sub[, start[, end]]) :: Regresa el número
+     de ocurrencias de la subcadena *sub* en el rango
+     [ /start/, /end/ ]
+- str.endswith(suffix[,start[,end]]) :: Regresa
+     verdadero si la cadena termina con la subcadena
+     *suffix*, en otro caso regresa falso. Con el
+     argumento opcional *start*, prueba a partir de la
+     posición indicada. Con el argumento opcional *end*,
+     se detiene la prueba en la posición indicada.
+
+* Funciones para cadenas
+
+- str.find(sub, [,start[,end]]) :: Regresa el índice
+     más chico donde la subcadena *sub* hace aparición
+- str.format(*args, *kwargs) :: Función de formato.
+- str.join(iterable) :: Regresa una cadena que
+     representa la concatenación de los elementos en el
+     iterador *iterable*.
+- str.replace(old, new[, count]) :: Regresa una copia
+     de la cadena replazando la subcadena *old* con *new*.
+- str.split(sep[,maxsplit]) :: Regresa una lista de
+     todas las palabras en la cadena usando *sep* como
+     delimitador.
+
+* Listas
+
+Es una secuencia de valores encerrados entre corchetes
+y separados por comas. Este tipo lo vamos a definir de
+la siguiente forma:
+
+#+BEGIN_SRC python
+lista = [1, 2, 3]
+#+END_SRC
+
+* Operaciones de listas
+
+- l.append(x)
+- l.extend(k) ó l += k
+- l *= n
+- l.count(x)
+- l.index(x, [i, [j]])
+- l.insert(i, x)
+- l.pop([i])
+- l.remove(x)
+- l.reverse()
+- l.sort([cmp[, key[, reverse]]])
+
+* Tuplas
+
+Similar a las listas, sólo que estas representan
+secuencias inmutables. La definición de una tupla es
+una secuencia separada por comas y delimitada por
+paréntesis.
+
+#+BEGIN_SRC python
+tupla = (1, 2, 3)
+#+END_SRC
+
+* Conjuntos
+
+Los conjuntos son colecciones desordenadas de elementos
+únicos. Estas colecciones las vamos a construir de la
+siguiente forma:
+
+#+begin_src python
+Set(['a','b','c'])
+#+end_src
+
+* Operaciones sobre conjuntos
+
+- s.update(t)	s |= t
+- s.intersection_update(t)	s &= t
+- s.difference_update(t)	s -= t
+- s.symmetric_difference_update(t)	s ^= t
+- s.add(x)
+- s.remove(x)
+- s.discard(x)
+- s.pop()
+- s.clear()
+
+* Ejemplo
+
+#+begin_src python
+engineers = set(['Juan', 'Maria', 'Jonas', 'Andres'])
+programmers = set(['Jonas', 'Samuel', 'Susana', 'Andres'])
+managers = set(['Maria', 'Jonas', 'Susana', 'Pedro'])
+employees = engineers | programmers | managers           # union
+engineering_management = engineers & managers            # intersección
+fulltime_management = managers - engineers - programmers # diferencia
+engineers.add('Marvin')                                  # Agrega
+print engineers
+
+employees.issuperset(engineers)     # prueba de superconjunto
+
+employees.update(engineers)         # actualizando desde otro conjunto
+employees.issuperset(engineers)
+
+for group in [engineers, programmers, managers, employees]:
+    group.discard('Susana')          # Eliminación incodicional
+    print group
+#+end_src
+
+* Diccionarios
+
+Representan mapas de objetos arbitrarios, estos mapas
+siempre se componen de una llave y un valor. La forma
+de representar estos objetos es la siguiente:
+
+
+#+begin_src python
+a = dict(one=1, two=2, three=3)
+b = {'one': 1, 'two': 2, 'three': 3}
+c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+d = dict([('two', 2), ('one', 1), ('three', 3)])
+e = dict({'three': 3, 'one': 1, 'two': 2})
+a == b == c == d == e
+#+end_src
+
+* Operaciones sobre diccionarios
+
+- len(d)
+- d[key]
+- d[key] = value
+- key in d
+- key not in d
+- iter(d)
+- d.clear()
+- d.get(key[, default])
+- d.items()
+- d.iteritems()
+- d.itervalues()
+- d.iterkeys()

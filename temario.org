@@ -49,7 +49,7 @@ básica el editor Emacs.
   - While
   - For
 
-** Módulos y paquetes (1 hora)
+** [[file:modulos/modulos.org][Módulos y paquetes]] (1 hora)
   - ¿Como trabajan los módulos?
   - Manejando el código a través de paquetes
 

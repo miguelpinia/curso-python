@@ -53,7 +53,7 @@ básica el editor Emacs.
   - ¿Como trabajan los módulos?
   - Manejando el código a través de paquetes
 
-** Entrada y salida (1 hora)
+** [[file:archivos/archivos.org][Entrada y salida]] (1 hora)
   - Lectura de archivos de texto
   - Escritura de archivos de texto
   - Manejo de otros formatos (csv, excel)

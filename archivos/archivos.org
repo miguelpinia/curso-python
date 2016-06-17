@@ -1,0 +1,222 @@
+#+title: Entrada y salida
+#+author: Miguel Piña
+#+date: [2016-06-16 jue 21:19]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Archivos
+
+Python nos provee una interfaz simple y sencilla para trabajar con
+archivos. Para usar un archivo basta con ejecutemos el siguiente comando.
+
+#+begin_src python
+archivo = open("ruta al archivo")
+#+end_src
+
+Donde la función open, asigna a la variable archivo un
+valor de tipo file. La función open además recibe el
+modo con el que va a operar el archivo, los cuáles
+listamos a continuación.
+
+| Indicador | Modo                           |
+|-----------+--------------------------------|
+| r         | Sólo lectura                   |
+| rb        | Sólo lectura en modo binario   |
+| r+        | Lectura y Escritura            |
+| rb+       | Lectura y Escritura en binario |
+| w         | Sólo escritura                 |
+| w+        | Escritura y Lectura            |
+| wb+       | Escritura y Lectura en binario |
+| a         | Agregar contenido              |
+| a+        | Agregar y leer                 |
+
+* Métodos de file
+
+- read([bytes]) :: Lee todo el contenido de un
+    archivo. Si se le pasa la longitud de bytes, leerá sólo
+    el contenido hasta la longitud indicada.
+
+#+BEGIN_SRC python
+archivo = open("foo.txt")
+contenido = archivo.read()
+print contenido
+#+END_SRC
+
+- readline([bytes]) :: Lee una linea del archivo
+
+#+BEGIN_SRC python
+archivo = open("foo.txt")
+linea = archivo.readline()
+#+END_SRC
+
+- readlines() :: Lee todas las lineas de un archivo
+
+#+begin_src python
+archivo = open("foo.txt")
+for linea in archivo.readlines():
+    print linea
+#+end_src
+
+* Métodos de file
+
+- seek(byte) :: Mueve el puntero hacia el bit inidicado
+
+#+begin_src python
+archivo = open("foo.txt")
+contenido = archivo.read()
+archivo.seek(0)
+#+end_src
+
+- tell() :: Retorna la posición actual del puntero.
+
+#+begin_src python
+archivo = open("foo.txt", "r")
+linea1 = archivo.readline()
+mas = archivo.read(archivo.tell() * 2)
+
+if archivo.tell() > 50:
+    archivo.seek(50)
+#+end_src
+
+- write(cadena) :: Escribe cadena dentro del archivo.
+
+#+begin_src python
+archivo = open("foo.txt", "r+")
+contenido = archivo.read()
+final_de_archivo = archivo.tell()
+
+archivo.write('Nueva linea')
+archivo.seek(final_de_archivo)
+nuevo_contenido = archivo.read()
+
+print nuevo_contenido
+#+end_src
+
+* Métodos de file
+
+- writelines(secuencia) :: Secuencia será cualquier
+     iterable cuyos elementos serán escritos uno por línea.
+
+#+begin_src python
+archivo = open("foo.txt", "r+")
+contenido = archivo.read()
+final_de_archivo = archivo.tell()
+lista = ['Línea 1\n', 'Línea 2']
+
+archivo.writelines(lista)
+archivo.seek(final_de_archivo)
+
+print archivo.readline()
+print archivo.readline()
+#+end_src
+
+- close() :: Cierra un archivo.
+
+#+begin_src python
+archivo = open("remeras.txt", "r")
+contenido = archivo.read()
+archivo.close()
+print contenido
+#+end_src
+
+
+* Propiedades de file
+
+Se pueden acceder a las siguientes propiedades del
+objeto file:
+
+- closed :: retorna True si el archivo se ha cerrado. De
+     lo contrario, False.
+- mode :: retorna el modo de apertura.
+- name :: retorna el nombre del archivo
+- encoding :: retorna la codificación de caracteres de
+     un archivo de texto
+
+* With
+
+Desde python 2.5 se incorpora una forma elegante de
+trabajar con archivos de tal forma que, al finalizar su
+uso, se cierren.
+
+#+begin_src python
+with open("foo.txt", "r") as archivo:
+    contenido = archivo.read()
+
+print archivo.closed
+#+end_src
+
+Cuando una estructura with finaliza, Python,
+automáticamente invoca al método close(), como se puede
+ver en el valor de la propiedad closed.
+
+Como también se deja ver en el ejemplo, la sentencia
+with utiliza un alias para el objeto file, lo que
+permite acceder al objeto file, justamente, por el
+alias indicado.
+
+
+* Excel
+
+Para hacer uso de archivos de Excel dentro de python
+hay que instalar un paquete llamado *openpyxl*:
+
+Este se puede instalar en Debian/Ubuntu a través de lo siguiente:
+
+#+begin_src sh
+sudo apt-get install python-openpyxl
+#+end_src
+
+O usando pip
+
+#+begin_src python
+pip install openpyxl
+#+end_src
+
+* Abriendo archivos de excel
+
+Para abrir un archivo de excel dentro de python, hay
+que ejecutar las siguientes instrucciones:
+
+#+begin_src python
+import openpyxl
+wb = openpyxl.load_workbook('example.xlsx')
+type(wb)
+#+end_src
+
+* Obteniendo hojas del archivo
+
+Para obtener las hojas de un archivo xlsx, basta con
+invocar la función *get_sheet_names* para conocer las
+hojas que están definidas para el archivo que estamos
+manipulando.
+
+Una vez conocido la hoja, la podemos obtener con la
+función *get_sheet_by_name.*
+
+#+begin_src python
+import openpyxl
+wb = openpyxl.load_workbook('example.xlsx')
+wb.get_sheet_names()
+sheet = wb.get_sheet_by_name('Hoja1')
+sheet
+
+type(sheet)
+sheet.title
+#+end_src
+
+* Obteniendo celdas desde las hojas
+
+Una celda es obtenida con la función cell, indicando la
+coordenada donde se encuentra.
+
+#+begin_src python
+import openpyxl
+wb = openpyxl.load_workbook('foo.xlsx')
+sheet = wb.get_sheet_by_name('Hoja1')
+sheet.cell('A1')
+sheet.cell('A1').value
+c = sheet.cell('B1')
+c.value
+'Renglon ' + str(c.row) + ', columna ' + c.column + ': ' + c.value
+'Celda ' + c.get_coordinate() + ': ' + c.value
+sheet.cell('C1').value
+#+end_src

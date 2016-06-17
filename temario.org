@@ -35,7 +35,7 @@ básica el editor Emacs.
   - [[file:sesion2/sesion2.org][Configuración del entorno de desarrollo (emacs)]]
   - Scripts y evaluación /on live/
 
-** Tipos de datos (1 hora)
+** [[file:tipos/tipos.org][Tipos de datos]] (1 hora)
   - Númericos
   - Booleanos
   - Cadenas

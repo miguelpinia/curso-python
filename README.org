@@ -3,17 +3,51 @@
 #+date: [2016-06-12 dom 18:43]
 
 
-En este repositorio se subirá todo el material del curso de Python impartido en
-la Facultad de Ciencias.
+** Motivación
 
-La mayoría del material será en formato org-mode y proyectos hechos vía
-virtualenv, para facilitar su reproducción.
+ El presente repositorio pretende proveer el material usando en el curso de
+ Python impartido en el periodo intersemestral de verano de la Facultad de
+ Ciencias.
 
-El temario del curso se encuentra disponible en [[file:temario.org][la siguiente liga.]]
+** Características del repositorio
 
-La configuración que hemos construido en la sesión 2, se puede consultar en el
-siguiente [[file:sesion2/init.el][archivo.]]
+ A continuación se listan algunas de las características de este repositorio.
 
-*Atentamente:*
+*** Formato
 
-Miguel Piña ([[https://github.com/miguelpinia][@MiguelPinia]])
+  La mayoría del material será en formato org-mode y eventualmente proyectos
+  hechos vía virtualenv, para facilitar su reproducción.
+
+  El temario del curso mantiene los enlaces a los respectivos archivos org que
+  contienen el texto de las presentaciones hechas con org-mode.
+
+*** Visualización de la información
+
+  Para visualizarlas las presentaciones correctamente, es necesario tener
+  instalado emacs (> 24.3) y tener instalado el paquete =epresent= para emacs.
+
+*** Temario del curso
+
+  El temario del curso se encuentra disponible en [[file:temario.org][la siguiente liga.]]
+
+  Dentro del archivo, se mantiene una serie de enlaces a las presentaciones y el
+  código desarrollado durante el curso.
+
+** Configuración de emacs
+
+ Durante la segunda sesión del curso, se implementó un archivo de configuración
+ de emacs para tener un conjunto de características que facilitaran el desarrollo
+ del código en python.
+
+ Esta configuración se encuentra disponible en el siguiente archivo: [[file:sesion2/init.el][init.el]], el
+ cuál basta con ponerlo dentro de una carpeta nombrada como =.emacs.d=, en la cuál,
+ emacs va a solicitar toda la información de configuración al arranque.
+
+** Ejercicios
+
+ En el archivo [[file:ejercicios.org][ejercicios.org]] se encuentran una serie de ejercicios para ser
+ realizado con python
+
+ *Atentamente:*
+
+ Miguel Piña ([[https://github.com/miguelpinia][@MiguelPinia]])

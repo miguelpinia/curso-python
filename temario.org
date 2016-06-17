@@ -44,7 +44,7 @@ básica el editor Emacs.
   - Conjuntos
   - Diccionarios
 
-** Controles de flujo (1 hora)
+** [[file:flujo/flujo.org][Controles de flujo]] (1 hora)
   - If - Else If
   - While
   - For

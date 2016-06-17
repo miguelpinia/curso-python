@@ -1,0 +1,23 @@
+#+title: Ejercicios
+#+author: Miguel Piña
+#+date: [2016-06-16 jue 22:40]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Ejercicios 17 de junio de 2016
+
+Usando python, resolver los siguientes problemas.
+
+- Ejercicio 1 :: Dado un número n, encontrar el numero de 3 digitos más pequeño
+     tal que el producto de sus digitos es igual a n. Por ejemplo, dado n = 100,
+     la solución es 455.
+- Ejercicio 2 :: Dadas dos listas, una con n elementos y la otra con n+2
+     elementos, tales que la segunda contiene los n elementos de la primera,
+     encontrar los dos elementos adicionales. Asuma que ninguno de los elementos
+     está duplicado.
+- Ejercicio 3 :: Dadas dos cadenas, determinar si son iguales excepto por
+     exactamente un caracter. Para dos cadenas iguales, la prueba va a
+     fallar. Dos cadenas que difieren dos o más caracteres van a fallar en la
+     prueba. Dos cadenas con longitudes que difieren por exactamente un caracter
+     van a pasar la prueba, si y sólo si, ellas son identicas excepto por el
+     caracter adicional. Indicar el indice donde la diferencia ocurre o reportar
+     la falla donde la prueba no difieren por exactamente un caracter.

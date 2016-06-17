@@ -1,0 +1,215 @@
+#+title: Control de flujo
+#+author: Miguel Piña
+#+date: [2016-06-14 mar 21:39]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* If
+
+Control de flujo básico, en el que se prueba una
+condición booleana, la cuál en el caso de ser verdadera
+se ejecutan las instrucciones que se definan.
+
+Además del *if*, tenemos *elif* y *else*.
+
+#+begin_src python
+x = int(raw_input("Ingresa un entero: "))
+
+if x < 0:
+    x = 0
+    print 'Numero negativo cambiado a cero'
+elif x == 0:
+    print 'Cero'
+elif x == 1:
+    print 'Uno'
+else:
+    print 'Mas'
+#+end_src
+
+* Ejercicio
+Usando las definiciones del índice de masa corporal,
+implementar un programa que le pida al usuario su
+estatura y su peso, a partir de esto decirle cuál es la
+clasificación de su índice de masa corporal.
+
+[[https://es.wikipedia.org/wiki/%C3%8Dndice_de_masa_corporal][Índice de masa corporal]]
+
+* For
+
+Es una instrucción de Python que permite iterar sobre
+los elementos de cualquier secuencia, como una lista o
+una cadena.
+
+*Sintaxis:*
+
+#+BEGIN_SRC python
+for iter_var in secuencia:
+    instrucciones
+#+END_SRC
+
+- Si la secuencia es una lista o una estructura
+  similar, esta última se evalúa primero.
+
+* For anidados
+
+Hay ocasiones en que queremos correr una sección de
+código X tal que ese código también se ejecute un
+número Y de veces cada vez que X sea ejecutado.
+
+Para hacer esto hay que hacer uso de for anidados, se
+usa la siguiente sintaxis:
+
+#+begin_src python
+for iter_var_1 in secuencia_1:
+    for iter_var_2 in secuencia_2:
+        instrucciones
+#+end_src
+
+* Range vs XRange
+
+La función *range* crea la lista completa de elementos
+definida por la entrada con la que se le
+alimente. Mientras que la función *xrange* crea un
+generador de números y los va creando conforme los va
+necesitando.
+
+Es por esto que siempre se prefiere usar *xrange* sobre *range*.
+
+* Ejemplos for
+
+#+begin_src python
+for x in xrange(1, 11):
+    for y in xrange(1, 11):
+        print '%d * %d = %d' % (x, y, x*y)
+#+end_src
+
+#+begin_src python
+for x in xrange(3):
+    if x == 1:
+        break
+#+end_src
+
+#+begin_src python
+for x in xrange(3):
+    print x
+else:
+    print 'Final x = %d' % (x)
+#+end_src
+
+#+begin_src python
+string = "Hello World"
+for x in string:
+    print x
+#+end_src
+
+* Ejemplos for
+
+#+begin_src python
+collection = ['hey', 5, 'd']
+for x in collection:
+    print x
+#+end_src
+
+#+begin_src python
+list_of_lists = [ [1, 2, 3], [4, 5, 6], [7, 8, 9]]
+for list in list_of_lists:
+    for x in list:
+        print x
+#+end_src
+
+
+#+begin_src python
+class Iterable(object):
+
+    def __init__(self,values):
+        self.values = values
+        self.location = 0
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.location == len(self.values):
+            raise StopIteration
+        value = self.values[self.location]
+        self.location += 1
+        return value
+#+end_src
+
+* Ejemplos for
+
+#+begin_src python
+import time
+
+#use time.time() on Linux
+
+start = time.clock()
+for x in range(10000000):
+    pass
+stop = time.clock()
+
+print stop - start
+
+start = time.clock()
+for x in xrange(10000000):
+    pass
+stop = time.clock()
+
+print stop - start
+#+end_src
+
+* Ejemplos for
+#+begin_src python
+import time
+
+#use time.time() on Linux
+
+start = time.clock()
+
+for x in range(1000):
+    pass
+stop = time.clock()
+
+print stop-start
+
+start = time.clock()
+for x in xrange(1000):
+    pass
+stop = time.clock()
+
+print stop-start
+#+end_src
+
+#+begin_src python
+def my_range(start, end, step):
+    while start <= end:
+        yield start
+        start += step
+
+for x in my_range(1, 10, 0.5):
+    print x
+#+end_src
+
+* While
+
+Los ciclos *while* son similares a los ciclos *for*, los
+cuáles son usados para repetir secciones de código,
+pero a diferencia de estos últimos, el ciclo *while* no
+se ejecuta un número /n/ de veces, si no hasta que se
+cumple cierta condición.
+
+#+begin_src python
+n = raw_input("Please enter 'hello':")
+while n.strip() != 'hello':
+    n = raw_input("Please enter 'hello':")
+#+end_src
+
+
+#+begin_src python
+while True:
+    n = raw_input("Please enter 'hello':")
+    if n.strip() == 'hello':
+        break
+#+end_src
+
+- Nota :: Debemos mencionar que debido a la potencia
+     del for, los ciclos while raramente son usados.

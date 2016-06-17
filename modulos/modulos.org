@@ -1,0 +1,89 @@
+#+title: Modulos y paquetes
+#+author: Miguel Piña
+#+date: [2016-06-16 jue 20:27]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+
+
+* ¿Qué es un módulo?
+
+En python, cada uno de los archivos .py que definimos
+se le denominan *módulos*, estos a su vez, pueden formar
+parte de una paquete.
+
+* ¿Qué es un paquete?
+
+Un paquete es una carpeta que contiene archivos
+.py. Pero para que una carpeta pueda ser considerada un
+paquete, esta debe de tener un archivo de inicio
+llamado __init__.py. Este archivo puede estar
+completamente vacío.
+
+#+begin_src txt
+[20:38:28 miguel --> python ]$ tree src
+src
+├── __init__.py
+├── module.py
+├── package1
+│   ├── __init__.py
+│   ├── module1.py
+│   ├── module2.py
+│   └── module3.py
+├── package2
+│   ├── __init__.py
+│   └── only_module.py
+└── package3
+    ├── foo.py
+    └── __init__.py
+#+end_src
+
+* ¿Cómo importar un módulo?
+
+El contenido de un módulo puede ser utilizado por otros
+módulos, para realizar esto, es necesario importar un
+módulo a nuestro archivo actual. La forma de realizar
+esto es usando el comando *import* seguida del nombre del
+paquete (opcional) más el nombre del módulo.
+
+#+begin_src python
+# -*- coding: utf-8 -*-
+import foo          # importando un módulo que no está dentro de un paquete
+import foo.bar      # importando un módulo que está dentro de un paquete
+import foo.bar.baz  # importando un módulo que está dentro de un subpaquete
+#+end_src
+
+* Namespaces y alias
+
+Un namespace es el nombre del archivo del que queremos
+importar cosas, a partir de este podemos acceder a los
+elementos que estén definidos dentro de él.
+
+#+begin_src python
+print foo.CONSTANTE
+#+end_src
+
+Además de esto, siempre podemos abreviar su nombre a
+través de alias, los cuáles los definimos al momento de
+la importación de los módulos.
+
+#+begin_src python
+import foo as f
+
+print f.CONSTANTE
+#+end_src
+
+Además de lo anterior, podemos importar elementos sin
+usar namespaces.
+
+#+begin_src python
+from modulo.foo import CONSTANTE
+#+end_src
+
+* Ejemplo cool
+
+Importar lo siguiente dentro de un intérprete de
+python.
+
+#+begin_src python
+import this
+#+end_src

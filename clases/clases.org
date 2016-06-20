@@ -1,0 +1,448 @@
+#+title: Clases y objetos
+#+author: Miguel Piña
+#+date: [2016-06-19 dom 18:15]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Objetivos
+
+- Aprender a definir nuevas clases que pueden proveer
+  estructuras para programas complejos
+- Leer y escribir clases en Python
+- Entender el concepto de encapsulación y como
+  contribuir programas modulares y mantenibles.
+- Ser capaz de escribir programas usando clases.
+
+* ¿Qué es una clase?
+
+Es un modelo sobre el cual vamos a construir nuestros
+objetos. Estos nos van a proveer una serie de
+características para cada uno de los objetos que
+definamos, tales como atributos y métodos (acciones del
+objeto).
+
+- Nota :: El nombre de las clases se define en singular
+     usando notación [[https://es.wikipedia.org/wiki/CamelCase][CamelCase]].
+
+* ¿Cómo definimos una clase?
+
+La forma de definir clases a través del lenguaje Python
+es haciendo uso de la palabra reservada *class*, seguida
+del nombre que se le quiera asignar a la clase, seguido
+de dos puntos.
+
+*Ejemplo:*
+
+#+begin_src python
+class Foo:
+    pass
+
+class Bar:
+    pass
+#+end_src
+
+
+* Atributos
+
+De nada sirve tener una clsae sin atributos que la
+defina, por lo que debemos asignarle a nuestras clases
+algunas propiedades que permitan definirlas. Esto lo
+vamos a hacer de la siguiente forma:
+
+#+begin_src python
+class Foo:
+    a = 1
+    b = "Soy Foo"
+#+end_src
+
+Los atributos de una clase pueden ser tantos como
+necesitemos, por lo que no hay un límite.
+
+* ¿Cómo instanciar una clase?
+
+A pesar de que ya tenemos la definición de una clase,
+esto no es algo que podamos manipular de manera
+directa, ya que las clases se pueden ver como un
+contrato que cumplen todos los objetos que implementan
+una clase.
+
+Para instanciar objetos en python, lo único que tenemos
+que hacer, es asignar a una variable el nombre de la
+clase seguido de paréntesis. *Ejemplo:*
+
+#+begin_src python
+class Gato:
+   numero_de_patas = 0
+   color = "negro"
+
+gato = Gato()
+#+end_src
+
+* Modificando atributos
+
+Para referenciar un atributo desde un objeto, tenemos
+que invocarla siguiendo las siguiente estructura:
+
+#+begin_src python
+nombre_objeto.nombre_atributo
+#+end_src
+
+Usando el ejemplo del gato podemos hacer lo siguiente:
+
+#+begin_src python
+class Gato:
+   numero_de_patas = 0
+   color = "negro"
+
+gato = Gato()
+gato.numero_de_patas = 4
+color = "marron"
+print "El gato tiene " + str(gato.numero_de_patas) " patas y es de color " + gato.color
+#+end_src
+
+* Acciones
+
+Las clases además de definir atributos, estas también
+tienen métodos, las cuáles van a representar acciones
+que puede realizar el objeto.
+
+Los métodos esencialmente son funciones dentro de las
+clases. Para definir un método, basta con hacer lo
+siguiente:
+
+#+begin_src python
+class Gato:
+   numero_de_patas = 0
+   color = "negro"
+
+   def dormir(self):
+       print "Zzzz..."
+
+   def molestar_humano(self):
+       while True:
+           acariciar = raw_input("Acariciame")
+           if acariciar == "Acariciado":
+               break
+#+end_src
+
+* Notas acerca de los métodos
+
+- Para definir un método dentro de una clase, hay que
+  aplicar indentado para que el intérprete de python lo
+  reconozca como método de la clase.
+- Todos los métodos de clase deben de tener un
+  parámetro *self*, el cuál es un parámetro que permite
+  operar con los demás atributos y métodos dentro de la
+  clase.
+
+* Método __init__
+
+En python, el método __init__ sirve como constructor de
+una clase y nos permite asignar valores a los atributos
+de una clase al momento de que estas se instancian.
+
+Ejemplo:
+
+#+begin_src python
+class Gato:
+    numero_de_patas = 0
+    color = "negro"
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+gato = Gato("Juan")
+
+print "El gato " + gato.nombre + " tiene " + str(gato.numero_de_patas) + " patas y es de color " + gato.color
+#+end_src
+
+
+* Ejercicio
+
+Escribe una clase que represente una esfera, tu clase
+debe de implementar los siguientes métodos.
+
+- __init__(self, radio) :: Crea una esfera con el radio especificado
+- getRadio(self) :: Regresa el radio de la esfera
+- superficie(self) :: Regresa el valor total de la superficie de la esfera
+- volumen(self) :: Regresa el volumen total de la esfera
+
+* Herencia
+
+En Python es posible trabajar con clases que heredan
+comportamiento de otras clases. Esto va a permitir que
+varias clases compartan las mismas propiedades y
+métodos que otras, además de agregar nuevas
+características.
+
+En particular todos las clases van a heredar de la
+clase object, la cual permite definir nuevos objetos
+dentro del lenguaje.
+
+* Herencia
+
+Ejemplo:
+
+#+begin_src python
+class Animal(object):
+    nombre = ""
+
+class Perro(Animal):
+    color = ""
+    def __init__(self, nombre, color):
+        self.color = color
+        self.nombre = nombre
+
+    def descripcion(self):
+        print "El perro " + self.nombre + " es de color: " + self.color
+
+class Gato(Animal):
+    patas = 0
+    def __init__(self, nombre, patas = 4):
+        self.nombre = nombre
+        self.patas = patas
+
+    def descripcion(self):
+        print "El gato " + self.nombre + " tiene " + str(self.patas)
+#+end_src
+
+* Polimorfismo
+
+El concepto de polimorfismo (del griego muchas formas)
+implica que si en una porción de código se invoca un
+determinado método de un objeto, podrán obtenerse
+distintos resultados según la clase del objeto. Esto se
+debe a que distintos objetos pueden tener un método con
+un mismo nombre, pero que realice distintas
+operaciones.
+
+* Polimorfismo
+
+#+begin_src python
+class Persona(object):
+
+    def __init__(self, identificacion, nombre, apellido):
+        self.identificacion = identificacion
+        self.nombre = nombre
+        self.apellido = apellido
+    def __str__(self):
+        return " %s: %s, %s" %
+            (str(self.identificacion), self.apellido, self.nombre)
+
+class Alumno(Persona):
+    def __init__(self, identificacion, nombre, apellido, padron):
+        Persona.__init__(self, identificacion, nombre, apellido)
+        self.padron = padron
+
+    def __str__(self):
+        return " %d: %s, %s" %
+            (str(self.padron), self.apellido, self.nombre)
+
+def imprimir(persona):
+    print persona
+# Imprimir persona y alumno
+#+end_src
+
+* Encapsulamiento
+
+La idea del encapsulamiento es es impedir el acceso al
+los métodos o variables del objeto, para que solo se
+puedan usar dentro de la instancia del objeto. Esto en
+los lenguajes como Java o C# lo logran con unos
+modificadores de acceso (anteponen a la definición del
+método o propiedad public, private, protected, etc.).
+
+Python no cuenta con estos modificadores de acceso para
+lograr el encapsulamiento. Por que el acceso a una
+variable o método viene dado por su nombre. Para que un
+método sea privado en Python lo que hay que hacer es
+anteponerle dos guiones bajos “__” antes del nombre y
+no dejar que termine con dos guiones bajos “__”. Lo
+mismo para las variable.
+
+* Encapsulamiento
+
+#+begin_src python
+class Persona(object) :
+    "Calse Persona"
+    def __init__(self, pNombre,pEdad,pSueldo) :
+        self.setNombre(pNombre)
+        self.setEdad(pEdad)
+        self.__setSueldo(pSueldo);
+    def setEdad(self, pEdad) :
+        self.__edad = pEdad
+    def getEdad(self) :
+        return self.__edad
+    def setNombre(self, pNombre) :
+        self.__nombre = pNombre
+    def getNombre(self) :
+        return self.__nombre
+    def __setSueldo(self,pSueldo):
+        self.__sueldo = pSueldo
+    def getSueldo(self):
+        return self.__sueldo
+    nombre = property(getNombre, setNombre)
+    edad = property(getEdad, setEdad)
+class Gerente(Persona) :
+    def __init__(self, pNombre,pEdad):
+        Persona.__init__(self, pNombre,pEdad,5000)
+class Secretaria(Persona) :
+    def __init__(self, pNombre,pEdad) :
+        Persona.__init__(self, pNombre,pEdad,500)
+if __name__ == '__main__':
+    g = Gerente("Juan", 56)
+    s  = Secretaria("Rocio", 33)
+    print "El Gerente es", g.nombre , " gana ", g.getSueldo()
+    print "La Secretaria es ", s.getNombre(), " gana ",s.getSueldo
+#+end_src
+
+Veran que la clase Persona hereda de object esto es asi por que tiene que usar propiedades.
+También varan que el objeto “g” imprime su nombre por medio de su propiedad.
+
+* Excepciones
+Los errores de ejecución son llamados comúnmente
+excepciones y por eso de ahora en más utilizaremos ese
+nombre.
+
+Durante la ejecución de un programa, si dentro de una
+función surge una excepción y la función no la maneja,
+la excepción se propaga hacia la función que la invocó,
+si esta otra tampoco la maneja, la excepción continua
+propagándose hasta llegar a la función inicial del
+programa y si esta tampoco la maneja se interrumpe la
+ejecución del programa.
+
+* Excepciones
+
+En el caso de Python, el manejo de excepciones se hace
+mediante los bloques que utilizan las sentencias try,
+except y finally.
+
+Dentro del bloque try se ubica todo el código que pueda
+llegar a levantar una excepción, se utiliza el término
+levantar para referirse a la acción de generar una
+excepción.a
+
+* Excepciones
+
+Ejemplo:
+
+#+begin_src python
+dividendo = 5
+divisor = 0
+
+cociente = dividendo / divisor
+
+try:
+     cociente = dividendo / divisor
+except:
+    print "No se permite la división por cero"
+#+end_src
+
+* Excepciones
+
+Pero además de lo anterior, un mismo bloque puede
+definir varios tipos de excepciones.
+
+#+begin_src python
+try:
+    # aquí ponemos el código que puede lanzar excepciones
+except IOError:
+    # entrará aquí en caso que se haya producido
+    # una excepción IOError
+except ZeroDivisionError:
+    # entrará aquí en caso que se haya producido
+    # una excepción ZeroDivisionError
+except:
+    # entrará aquí en caso que se haya producido
+    # una excepción que no corresponda a ninguno
+    # de los tipos especificados en los except previos
+#+end_src
+
+* Excepciones
+
+En el caso de que queramos que se ejecute una acción al
+final de las instrucciones que pueden resultar
+peligrosas, hacemos uso de la sentencia finally para
+definir dichas acciones.
+
+#+begin_src python
+try:
+    archivo = open("miarchivo.txt")
+    # procesar el archivo
+except IOError:
+    print "Error de entrada/salida."
+    # realizar procesamiento adicional
+except:
+    # procesar la excepción
+finally:
+    # si el archivo no está cerrado hay que cerrarlo
+    if not(archivo.closed):
+        archivo.close()
+#+end_src
+
+* Validaciones
+
+En python, a veces necesitamos el validar las entradas
+que reciben nuestros programas, para ello, hacemos uso
+de validaciones, las cuales nos proveen una forma de
+validar el contenido recibido.
+
+Definimos algunos tipos de validaciones que pueden ser
+usadas cuando desarrollamos, las cuales listamos a
+continuación:
+
+- Comprobaciones por contenido
+- Validación de entrada del usuario
+- Comprobaciones de tipo
+- Comprobaciones por característicsa
+
+* Comprobación por contenido
+
+#+begin_src python
+def factorial(n):
+    """ Calcula el factorial de n.
+    Pre: n debe ser un entero, mayor igual a 0
+    Post: se devuelve el valor del factorial pedido
+    """
+    assert n >= 0, "n debe ser mayor igual a 0"
+    fact=1
+    for i in xrange(2,n+1):
+        fact*=i
+    return fact
+#+end_src
+
+* Validación de entrada del usuario
+
+#+begin_src python
+def lee_entero():
+    """ Solicita un valor entero y lo devuelve.
+        Si el valor ingresado no es entero, da 5 intentos para ingresarlo
+        correctamente, y de no ser así, lanza una excepción. """
+    intentos = 0
+    while intentos < 5:
+        valor = raw_input("Ingrese un número entero: ")
+        try:
+            valor = int(valor)
+            return valor
+        except ValueError:
+            intentos += 1
+    raise ValueError, "Valor incorrecto ingresado en 5 intentos"
+#+end_src
+
+* Comprobaciones por tipo
+
+#+begin_src python
+if type(i) not in (int, float, long, complex):
+    raise TypeError, "i debe ser numérico"
+#+end_src
+
+#+begin_src python
+if not isinstance(i, (int, float, long, complex) ):
+    raise TypeError, "i debe ser numérico"
+#+end_src
+
+* Comprobaciones por características
+
+#+begin_src python
+if not hasattr(i,"__add__"):
+    raise TypeError, "El elemento no es sumable"
+#+end_src

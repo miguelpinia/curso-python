@@ -59,7 +59,7 @@ básica el editor Emacs.
   - Manejo de otros formatos (csv, excel)
 
 
-** Introducción a la programación orientada a objetos con python (4 horas)
+** [[file:clases/clases.org][Introducción a la programación orientada a objetos con python]] (4 horas)
   - Clases y objetos
   - Herencia
   - Polimorfismo

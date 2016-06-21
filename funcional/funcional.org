@@ -1,0 +1,259 @@
+#+title: Programación funcional
+#+author: Miguel Piña
+#+date: [2016-06-20 lun 10:18]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Objetivo
+
+- Conocer que es la programación funcional
+- Identificar las herramientas que la componen
+- Construir programas que hagan uso de la programación
+    funcional
+
+* ¿Qué es la programación funcional?
+
+Es un paradigma que enfatiza la utilización funciones
+puras, es decir, funciones que no tengan efectos
+secundarios, que no manejen datos mutables o de estado.
+
+Los principales exponentes de estos lenguajes son los
+lenguajes tipo Lisp y Haskell (existen otros
+lenguajes).
+
+* ¿Por qué hacer uso de programación funcional?
+
+- Los programas funcionales son más fáciles de probar
+  su funcionamiento
+- Por su característica modular, facilita la
+  programación recurrente y paralela.
+- Se entiende el concepto de función según su
+  definición matemática y no como simples subprogramas
+  de los lenguajes imperativos.
+
+
+* Funciones de orden superior
+
+Son funciones que reciben o devuelven funciones y van a
+operar sobre funciones, es decir, el dominio o imagen
+de estas funciones son funciones.
+
+#+begin_src python
+def superior(interna):
+    def f1():
+        print "Función 1"
+    def f2():
+        print "Funcion 2"
+    funcion = {"uno" : f1, "dos" : f2}
+    return funcion[interna]
+#+end_src
+
+#+begin_src python
+def f1():
+    print "Función 1"
+def f2():
+    print "Funcion 2"
+def superior(funcion):
+    funcion()
+
+superior(f1)
+superior(f2)
+#+end_src
+
+* Funciones lambda
+
+Son funciones anónimas, mínimas de una linea, no pueden
+contener bucles y no pueden utilizar la palabra
+reservada return para regresar un valor.
+
+#+begin_src python
+cuadrado = lambda x: x ** 2
+print cuadrado(2)
+lista = range(10)
+for numero in lista:
+    print cuadrado(numero)
+#+end_src
+
+* Funciones lambda
+
+#+begin_src python
+def make_incrementor (n): return lambda x: x + n
+f = make_incrementor(2)
+g = make_incrementor(6)
+print f(42), g(42)
+print make_incrementor(22)(33)
+#+end_src
+
+* Funciones lambda
+
+#+begin_src python
+nums = range(2, 50)
+for i in range(2, 8):
+    nums = filter(lambda x: x == i or x % i, nums)
+print nums
+#+end_src
+
+* Listas por comprensión
+
+Es una expresión compacta que permite "mapear" y/o
+filtrar una lista en otra, aplicando una función a cada
+elemento de la lista, opcionalmente la lista original
+puede ser filtrada.
+
+*Crear una lista de cuadrados de los primeros 10 números
+ naturales*
+#+begin_src python
+[numero ** 2 for numero in range(10)]
+#+end_src
+
+*Crear una lista de numeros pares*
+#+begin_src python
+[numero ** 2 for numero in range(20) if numero % 2 == 0]
+#+end_src
+
+* Listas por comprensión
+
+#+begin_src python
+oracion = "El zorro café salta rápidamente sobre el perro perezoso."
+palabras = oracion.split()
+palabra_longitud = []
+for palabra in palabras:
+    if palabra != "el":
+        palabra_longitud.append(len(palabra))
+#+end_src
+
+#+begin_src python
+oracion = "El zorro café salta rápidamente sobre el perro perezoso."
+palabra_longitud = [len(palabra) for palabra in oracion.split() if palabra != "el"]
+#+end_src
+
+* Generadores
+
+Son una clase especial de funciones que no generan una
+lista, si no una secuencia de valores sobre el cual
+podemos iterar.
+Estos pueden ser:
+- Métodos generadores :: Incluyen la palabra *yield* y se
+     declaran como funciones.
+- Expresión generadora :: se declaran como una lista
+     por compresión entre ()
+
+* Generadores
+
+Permite crear un generador que recorre indefinidamente
+una lista dada.
+
+#+begin_src python
+def recorre(lista):
+    while True:
+        for n in lista:
+            yield n
+
+gen = recorre([1, "a", 2, "hola"])
+
+gen.next()
+#+end_src
+
+* Generadores
+
+Crea un generador de los primeros 10 números pares.
+
+#+begin_src python
+gen_pares = (p for p in range(20) if p % 2 == 0)
+gen_pares.next()
+#+end_src
+
+* Ejercicio
+
+Crear un generador de numeros primos, opcionalmente se
+le puede indicar a partir de que numero se quiere
+comenzar a generar los números primos.
+
+* Resultado
+
+#+begin_src python
+def es_primo(numero):
+    if numero > 1:
+        if numero == 2:
+            return True
+        if numero % 2 == 0:
+            return False
+        for current in range(3, int(math.sqrt(numero) + 1), 2):
+            if numero % current == 0:
+                return False
+        return True
+    return False
+
+def obten_primos(numero = 0):
+    while True:
+        if es_primo(numero):
+            yield numero
+        numero += 1
+
+f = obten_primos()
+#+end_src
+
+
+* Map
+
+Aplica una función sobre cada elemento de una lista y
+devuelve una lista con los resultados de aplicar la
+función a cada elemento.
+
+#+begin_src python
+lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+lista_nueva = map(lambda x: x ** 3, lista)
+print lista_nueva
+#+end_src
+
+* Map
+
+#+begin_src python
+import commands
+mount = commands.getoutput('mount -v')
+lines = mount.splitlines()
+points = map(lambda line: line.split()[2], lines)
+print points
+#+end_src
+
+#+begin_src python
+print map(lambda x: x.split()[2], commands.getoutput('mount -v').splitlines())
+#+end_src
+
+
+
+* Reduce
+
+Reduce los elementos de una lista aplicando una función
+reductora, devolviendo un único valor con el resultado
+de aplicar dicha función reductora.
+
+#+begin_src python
+lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+suma = reduce(lambda x, y: x + y, lista)
+print suma
+#+end_src
+
+* Filter
+
+Función que permite filtrar los elementos de una lista
+que cumplen con cierta condición expresada en una
+función booleana.
+
+#+begin_src python
+lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+pares = filter(lambda x: x % 2 == 0, lista)
+print pares
+#+end_src
+
+* Zip
+
+Función para reorganizar listas, admitiendo multiples
+listas, donde toma cada elemento i-ésimo de cada lista
+y los une en una tupla, luego hace una lista de ellas.
+
+#+begin_src python
+animal = ["conejo", "gato", "liebre", "oruga", "pajaro"]
+nombre = ["blanco", "de chesire", "de marzo", "azul", "dodo"]
+personajes = zip(animal, nombre)
+print personajes
+#+end_src

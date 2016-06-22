@@ -1,0 +1,419 @@
+#+title: Herramientas del computo científico
+#+author: Miguel Piña
+#+date: [2016-06-21 mar 21:18]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Objetivos
+
+- Conocer más sobre las herramientas provistas por numpy
+  para el cálculo científico.
+
+* Virtualenv
+
+Virtualenv es una herramienta del sistema que permite
+isolar instancias de python, es decir, poder tener
+distintas versiones de un mismo paquete a través de
+diversos proyectos.
+
+Esto permite que se puedan instalar bibliotecas incluso
+en máquinas en las que no se tienen los permisos para
+instalar nuevas cosas.
+
+* Virtualenv
+
+Para instalar virtualenv dentro sistemas linux tipo
+Debian, basta con ejecutar la siguiente instrucción:
+
+#+begin_src sh
+sudo apt-get install python-virtualenv
+#+end_src
+
+Una vez instalado, virtualenv tiene solo un comando
+básico para generar entornos virtuales.
+
+#+begin_src sh
+virtualenv mi_entorno
+#+end_src
+
+El cuál va a crear una carpeta llamada mi entorno con
+los siguientes ejecutables:
+
+- pip
+- setuptools
+- wheel
+
+* Virtualenv
+
+Una vez creado el entorno virtual, activamos la
+isolación del proyecto de la siguiente forma.
+
+#+begin_src sh
+source bin/activate
+#+end_src
+
+Lo cuál, en nuestra terminal se debería de mostrar algo como lo siguiente:
+
+=(mi_entorno)/tmp/entorno$=
+
+Para desactivarlo basta con escribir
+
+#+begin_src python
+deactivate
+#+end_src
+
+* Instalando numpy en virtualenv
+
+Con el entorno activado hay que ejecutar el siguiente comando
+
+#+begin_src sh
+pip install numpy
+#+end_src
+
+Lo anterior va a buscar en los repositorio de python el
+paquete de numpy e instalarlo dentro de nuestro entorno
+isolado.
+
+* Agregando un poco de configuración extra a Emacs
+
+Para trabajar con el entorno activado dentro de emacs,
+vamos a hacer uso de un paquete que nos provee ciertas
+funcionalidades para acceder a virtualenv. El paquete
+se llama pyvenv y de momento no se encuentra disponible
+dentro de los repositorios oficiales de emacs. POr lo
+que vamos a hacer una instalación manual.
+
+Vamos a clonar el repositorio de la siguiente forma:
+
+#+begin_src sh
+git clone https://github.com/jorgenschaefer/pyvenv.git
+#+end_src
+
+* Agregando un poco de configuración extra a Emacs
+
+Modificamos nuestro archivo init.el
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/path/to/pyvenv")
+(require 'pyvenv)
+#+end_src
+
+Usando la instrucción =M-x pyvenv-activate= indicamos
+donde está nuestro entorno virtualenv, por lo que al
+iniciar el interprete, podemos indicar cual va a ser la
+versión de python que queremos utilizar.
+
+* ¿Qué es Numpy?
+
+Numpy es una biblioteca para realizar computo
+científico a través de Python. Provee objetos de tipo
+arreglo multidimensionales de alto desempeño y
+herramientas para trabajar con dichos arreglos.
+
+Si están familiarizados con Matlab, encontrarán en
+Numpy una similitud para su desarrollo.
+
+
+* Arreglos
+
+Un arreglo en Numpy es una malla de valores, todos de
+un mismo tipo y están indexados por una tupla de
+enteros no negativos. El número de dimensiones es el
+rango del arreglo.
+
+Podemos inicializar arreglos de numpy desde listas
+anidadas de Python y acceder a sus elementos usando
+corchetes cuadrados.
+
+* Arreglos
+
+#+begin_src python
+import numpy as np
+
+a = np.array([1, 2, 3])  # Create a rank 1 array
+print type(a)            # Prints "<type 'numpy.ndarray'>"
+print a.shape            # Prints "(3,)"
+print a[0], a[1], a[2]   # Prints "1 2 3"
+a[0] = 5                 # Change an element of the array
+print a                  # Prints "[5, 2, 3]"
+
+b = np.array([[1,2,3],[4,5,6]])   # Create a rank 2 array
+print b.shape                     # Prints "(2, 3)"
+print b[0, 0], b[0, 1], b[1, 0]   # Prints "1 2 4"
+#+end_src
+
+* Arreglos
+
+Podemos crear matrices por defecto con los siguientes métodos
+
+#+begin_src python
+import numpy as np
+
+a = np.zeros((2,2))  # Create an array of all zeros
+print a              # Prints "[[ 0.  0.]
+                     #          [ 0.  0.]]"
+
+b = np.ones((1,2))   # Create an array of all ones
+print b              # Prints "[[ 1.  1.]]"
+
+c = np.full((2,2), 7) # Create a constant array
+print c               # Prints "[[ 7.  7.]
+                      #          [ 7.  7.]]"
+
+d = np.eye(2)        # Create a 2x2 identity matrix
+print d              # Prints "[[ 1.  0.]
+                     #          [ 0.  1.]]"
+
+e = np.random.random((2,2)) # Create an array filled with random values
+print e                     # Might print "[[ 0.91940167  0.08143941]
+                            #               [ 0.68744134  0.87236687]]"
+#+end_src
+
+* Arreglos
+
+Podemos sacar secciones de matriz y ponerlos en otras variables.
+
+#+begin_src python
+import numpy as np
+
+# Create the following rank 2 array with shape (3, 4)
+# [[ 1  2  3  4]
+#  [ 5  6  7  8]
+#  [ 9 10 11 12]]
+a = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])
+
+# Use slicing to pull out the subarray consisting of the first 2 rows
+# and columns 1 and 2; b is the following array of shape (2, 2):
+# [[2 3]
+#  [6 7]]
+b = a[:2, 1:3]
+
+# A slice of an array is a view into the same data, so modifying it
+# will modify the original array.
+print a[0, 1]   # Prints "2"
+b[0, 0] = 77    # b[0, 0] is the same piece of data as a[0, 1]
+print a[0, 1]   # Prints "77"
+#+end_src
+
+* Arreglos
+
+Integer array indexing
+
+#+begin_src python
+import numpy as np
+
+a = np.array([[1,2], [3, 4], [5, 6]])
+
+# An example of integer array indexing.
+# The returned array will have shape (3,) and
+print a[[0, 1, 2], [0, 1, 0]]  # Prints "[1 4 5]"
+
+# The above example of integer array indexing is equivalent to this:
+print np.array([a[0, 0], a[1, 1], a[2, 0]])  # Prints "[1 4 5]"
+
+# When using integer array indexing, you can reuse the same
+# element from the source array:
+print a[[0, 0], [1, 1]]  # Prints "[2 2]"
+
+# Equivalent to the previous integer array indexing example
+print np.array([a[0, 1], a[0, 1]])  # Prints "[2 2]"
+#+end_src
+
+
+* Arreglos
+
+Boolean array indexing
+
+#+begin_src python
+import numpy as np
+
+a = np.array([[1,2], [3, 4], [5, 6]])
+
+bool_idx = (a > 2)  # Find the elements of a that are bigger than 2;
+                    # this returns a numpy array of Booleans of the same
+                    # shape as a, where each slot of bool_idx tells
+                    # whether that element of a is > 2.
+
+print bool_idx      # Prints "[[False False]
+                    #          [ True  True]
+                    #          [ True  True]]"
+
+# We use boolean array indexing to construct a rank 1 array
+# consisting of the elements of a corresponding to the True values
+# of bool_idx
+print a[bool_idx]  # Prints "[3 4 5 6]"
+
+# We can do all of the above in a single concise statement:
+print a[a > 2]     # Prints "[3 4 5 6]"
+#+end_src
+
+
+* Arreglos
+
+Podemos realizar operaciones como en matlab con las matrices.
+
+#+begin_src python
+import numpy as np
+
+x = np.array([[1,2],[3,4]], dtype=np.float64)
+y = np.array([[5,6],[7,8]], dtype=np.float64)
+
+# Elementwise sum; both produce the array
+# [[ 6.0  8.0]
+#  [10.0 12.0]]
+print x + y
+print np.add(x, y)
+
+# Elementwise difference; both produce the array
+# [[-4.0 -4.0]
+#  [-4.0 -4.0]]
+print x - y
+print np.subtract(x, y)
+
+# Elementwise product; both produce the array
+# [[ 5.0 12.0]
+#  [21.0 32.0]]
+print x * y
+print np.multiply(x, y)
+
+# Elementwise division; both produce the array
+# [[ 0.2         0.33333333]
+#  [ 0.42857143  0.5       ]]
+print x / y
+print np.divide(x, y)
+
+# Elementwise square root; produces the array
+# [[ 1.          1.41421356]
+#  [ 1.73205081  2.        ]]
+print np.sqrt(x)
+#+end_src
+
+* Arreglos
+
+Numpy ofrece herramientas para realizar producto punto
+
+#+begin_src python
+import numpy as np
+
+x = np.array([[1,2],[3,4]])
+y = np.array([[5,6],[7,8]])
+
+v = np.array([9,10])
+w = np.array([11, 12])
+
+# Inner product of vectors; both produce 219
+print v.dot(w)
+print np.dot(v, w)
+
+# Matrix / vector product; both produce the rank 1 array [29 67]
+print x.dot(v)
+print np.dot(x, v)
+
+# Matrix / matrix product; both produce the rank 2 array
+# [[19 22]
+#  [43 50]]
+print x.dot(y)
+print np.dot(x, y)
+#+end_src
+
+* Arreglos
+
+Matrices traspuestas
+
+#+begin_src python
+import numpy as np
+
+x = np.array([[1,2], [3,4]])
+print x    # Prints "[[1 2]
+           #          [3 4]]"
+print x.T  # Prints "[[1 3]
+           #          [2 4]]"
+
+# Note that taking the transpose of a rank 1 array does nothing:
+v = np.array([1,2,3])
+print v    # Prints "[1 2 3]"
+print v.T  # Prints "[1 2 3]"
+#+end_src
+
+
+* Arreglos
+
+Numpy ofrece un mecanismo poderoso llamado
+broadcasting, con el cuál podemos operar con las tuplas
+de cada uno de las matrices.
+
+#+begin_src python
+import numpy as np
+
+# We will add the vector v to each row of the matrix x,
+# storing the result in the matrix y
+x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+v = np.array([1, 0, 1])
+y = np.empty_like(x)   # Create an empty matrix with the same shape as x
+
+# Add the vector v to each row of the matrix x with an explicit loop
+for i in range(4):
+    y[i, :] = x[i, :] + v
+
+# Now y is the following
+# [[ 2  2  4]
+#  [ 5  5  7]
+#  [ 8  8 10]
+#  [11 11 13]]
+print y
+#+end_src
+
+Usando broadcasting
+
+#+begin_src python
+import numpy as np
+
+# We will add the vector v to each row of the matrix x,
+# storing the result in the matrix y
+x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+v = np.array([1, 0, 1])
+y = x + v  # Add v to each row of x using broadcasting
+print y  # Prints "[[ 2  2  4]
+         #          [ 5  5  7]
+         #          [ 8  8 10]
+         #          [11 11 13]]
+#+end_src
+
+* Scipy
+
+Scipy es un framework que permite operar con los
+objetos que nos provee numpy, ofreciendo un gran número
+de operaciones para operar con los arreglos de numpy y
+que son útiles para diferentes tipos de aplicaciones
+científicas y de ingeniería.
+
+Para instalarlo dentro de nuestro entorno, basta con hacer
+
+#+begin_src sh
+pip install scipy
+#+end_src
+
+* Scipy
+
+Ejemplo
+
+#+begin_src python
+from scipy.misc import imread, imsave, imresize
+
+# Read an JPEG image into a numpy array
+img = imread('cat.jpg')
+print img.dtype, img.shape  # Prints "uint8 (400, 248, 3)"
+
+# We can tint the image by scaling each of the color channels
+# by a different scalar constant. The image has shape (400, 248, 3);
+# we multiply it by the array [1, 0.95, 0.9] of shape (3,);
+# numpy broadcasting means that this leaves the red channel unchanged,
+# and multiplies the green and blue channels by 0.95 and 0.9
+# respectively.
+img_tinted = img * [1, 0.95, 0.9]
+
+# Resize the tinted image to be 300 by 300 pixels.
+img_tinted = imresize(img_tinted, (300, 300))
+
+# Write the tinted image back to disk
+imsave('cat_tinted.jpg', img_tinted)
+#+end_src

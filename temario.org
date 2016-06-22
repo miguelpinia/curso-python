@@ -79,7 +79,7 @@ básica el editor Emacs.
   - Reduce
 
 
-** Herramientas para la programación científica (4 horas)
+** [[file:cientifico/numpy.org][Herramientas para la programación científica]] (4 horas)
   - Numpy
   - Scipy
   - Matplolib (pyplot)

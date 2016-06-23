@@ -1,0 +1,352 @@
+#+title: Scipy y matplotlib
+#+author: Miguel Piña
+#+date: [2016-06-22 mié 19:38]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Scipy
+
+Es un paquete que contiene numerosas herramientas
+dedicadas para resolver problemas comunes dentro del
+computo científico.
+
+Estas herramientas permiten trabajar con diferentes
+aplicaciones, tales como interpolación, integración,
+optimización, procesamiento de imágenes, estadísticas,
+funciones especiales, etc.
+
+* Instalando dependencias de scipy
+
+Scipy usa por detrás la infraestructura de numpy, pero
+además necesita otras bibliotecas para operar
+funcionalmente.
+
+#+begin_src sh
+pip install scipy
+pip install pillow
+easy_install matplotlib
+#+end_src
+
+El último paquete instala dependencias como matplotlib,
+pandas, tornado y otras.
+
+* Bibliotecas implementadas en scipy
+
+- scipy.io :: Entrada y salida
+- scipy.special :: Funciones especiales
+- scipy.fftpack :: Transformaciones rápidas de Fourier
+- scipy.optimize :: Optimización
+- scipy.interpolate :: Interpolación
+- scipy.integrate :: Integración numérica
+- scipy.signal :: Procesamiento de señales
+- scipy.ndimage :: Procesamiento de imagenes
+
+
+* Entrada y salida
+
+- Cargando y cargando archivos de matlab
+
+#+begin_src python
+from scipy import io as spio
+a = np.ones((3, 3))
+spio.savemat('file.mat', {'a': a}) # savemat expects a dictionary
+data = spio.loadmat('file.mat', struct_as_record=True)
+data['a']
+#+end_src
+
+- Leyendo imágenes
+
+#+begin_src python
+from scipy import misc
+misc.imread('fname.png')
+
+import matplotlib.pyplot as plt
+plt.imread('fname.png')
+#+end_src
+
+* Funciones especiales
+
+Las funciones especiales, son funciones
+transcendentales. La documentación de scipy.special
+está muy bien escrita, así que no vamos a listar todas
+las funciones aquí. Algunas de las más frecuentes son:
+
+- scipy.special.jn(args) :: Función de Bessel
+- scipy.special.ellipj(args) :: Función elíptica Jacobiana
+- scipy.special.gamma(args) :: Función gamma
+- scipy.special.erf(args) :: Erf, el área bajo una
+     curva Gaussiana
+
+* Algebra Lineal
+
+El módulo scipy.linalg provee funciones estándar de
+algebra lineal, todo bajo una eficiente implementación
+(BLAS, LAPACK).
+
+
+* Determinante de una matriz cuadrada
+
+La función scipy.linalg.det, computa el determinante de
+una matriz
+
+#+begin_src python
+from scipy import linalg
+import numpy as np
+arr = np.array([[1, 2],
+                [3, 4]])
+linalg.det(arr)
+
+arr = np.array([[3, 2],
+                [6, 4]])
+linalg.det(arr)
+
+linalg.det(np.ones((3, 4))) # Lanza un error as spected
+#+end_src
+
+* Inversa de una matriz
+
+La función scipy.linalg.inv() cálcula la inversa de una
+matriz cuadrada
+
+#+begin_src python
+arr = np.array([[1, 2],
+                [3, 4]])
+iarr = linalg.inv(arr)
+iarr
+np.allclose(np.dot(arr, iarr), np.eye(2)) # Prueba que
+# la multiplicación de una matriz por su inversa sea la
+# matriz identidad.
+#+end_src
+
+Finalmente, el computar la inversa de una matriz
+singular, va a lanzar un LinalgError
+
+#+begin_src python
+arr = np.array([[3, 2],
+                [6, 4]])
+linalg.inv(arr)
+#+end_src
+
+* Transformadas rápidas de Fourier
+
+El módulo scipy.fftpack permite computar transformadas
+rápidas de Fourier. A modo de ilustración, una señal
+(ruidosa) de entrada puede verse como:
+
+#+begin_src python
+time_step = 0.02
+period = 5.
+time_vec = np.arange(0, 20, time_step)
+sig = np.sin(2 * np.pi / period * time_vec) + \
+      0.5 * np.random.randn(time_vec.size)
+#+end_src
+
+El observador no conoce la frecuencia de la señal, solo
+muestrea tiempos de la señal sig. Suponemos para la
+señal que esta viene de una función real, así que, la
+transformada de Fourier debe ser simétrica. La función
+scipy.fftpack.fftfreq() va a generar las frecuencias
+del muestreo y la función scipy.fftpack.fft() va a
+computar las transformada rápida de Fourier.
+
+#+begin_src python
+from scipy import fftpack
+sample_freq = fftpack.fftfreq(sig.size, d=time_step)
+sig_fft = fftpack.fft(sig)
+#+end_src
+
+
+* Transformadas rápidas de Fourier
+
+Como el poder resultante es simétrico, sólo la parte
+positiva del espectro es necesitada para ser usada para
+encontrar la frecuencia.
+
+#+begin_src python
+pidxs = np.where(sample_freq > 0)
+freqs = sample_freq[pidxs]
+power = np.abs(sig_fft)[pidxs]
+#+end_src
+
+La señal de la frecuencia puede ser encontrada por:
+
+#+begin_src python
+freq = freqs[power.argmax()]
+np.allclose(freq, 1./period)  # Verifica que la frecuencia encontrada es correca
+#+end_src
+
+Ahora el ruido de alta frecuencia, va a ser removido
+desde la transformada de Fourier original
+
+#+begin_src python
+sig_fft[np.abs(sample_freq) > freq] = 0
+#+end_src
+
+La señal resultante filtrada puede ser computada por la
+función scipy.fftpack.ifft():
+
+#+begin_src python
+main_sig = fftpack.ifft(sig_fft)
+#+end_src
+
+El resultado se puede observar con:
+
+#+begin_src python
+import pylab as plt
+plt.figure()
+plt.plot(time_vec, sig)
+plt.plot(time_vec, main_sig, linewidth=3)
+plt.xlabel('Time [s]')
+plt.ylabel('Amplitude')
+#+end_src
+
+* Optimización y ajustes
+
+La Optimización se puede entender como el problema de
+encontrar una solución numérica a una minimización o
+igualdad.
+
+El módulo scipy.optimize provee poderosos algoritmos
+para minimización de funciones (scalares o
+multidimensionales), ajuste de curva y busqueda de
+raíces.
+
+* Encontrar el mínimo de una función escalar
+
+Definamos la siguiente función:
+
+#+begin_src python
+def f(x):
+    return x**2 + 10*np.sin(x)
+#+end_src
+
+Y dibujemosla
+
+#+begin_src python
+x = np.arange(-10, 10, 0.1)
+plt.plot(x, f(x))
+plt.show()
+#+end_src
+
+La función va a tener un mínimo global alrededor de
+-1.3 y un mínimo local alrededor de 3.8.
+
+* Encontrar el mínimo de una función escalar
+
+La forma general y eficiente para encontrar un mínimo
+para esta función es través de un gradiente
+descendiente iniciando a partir de un punto inicial
+dado. El algoritmo BFGS
+(Broyden–Fletcher–Goldfarb–Shanno) es una buena forma
+de buscarlo.
+
+#+begin_src python
+optimize.fmin_bfgs(f, 0)
+#+end_src
+
+Un posible problema con este enfoque es que, si la
+función tiene un mínimo local, el algoritmo puede
+encontrar ese mínimo local en lugar del mínimo global
+dependendiendo del punto inicial
+
+#+begin_src python
+optimize.fmin_bfgs(f, 3, disp=0)
+#+end_src
+
+* Encontrar el mínimo de una función escalar
+
+Si nosotros no conocemos la vecindad del mínimo global
+para elegir el punto inicial, necesitamos recurrir a
+una costosa optimización global. Para encontrar el
+mínimo global, usaremos la función
+scipy.optimize.basinhopping() (la cuál combina un
+optimizador local con muestreo estocástico de los
+puntos iniciales para el optimizador local).
+
+#+begin_src python
+optimize.basinhopping(f, 0)
+#+end_src
+
+Otra opción es utilizar la función
+scipy.optimize.brute() (ataque de fuerza bruta), el
+cuál es mucho menos eficiente.
+
+* Encontrar el mínimo de una función
+
+Para encontrar el mínimo local, vamos a permitir que la
+variable se desplace en el rango (0, 10) usando la
+función scipy.optimize.fminbound().
+
+#+begin_src python
+xmin_local = optimize.fminbound(f, 0, 10)
+xmin_local
+#+end_src
+
+* Encontrar las raíces de una función
+
+Para encontrar una raíz, i.e. un punto donde f(x) = 0,
+para la función f descrita anteriormente, vamos a
+utilizar la función scipy.optimize.fsolve()
+
+#+begin_src python
+root = optimize.fsolve(f, 1)  # Nuestra suposición inicial es 1
+root
+#+end_src
+
+Notemos que sólo una raíz es encontrada. Inspeccionado
+la gráfica de f, vemos que tenemos otra raíz alrededor
+de -2.5. Podemos encontrar el valor exacto ajustando
+nuestras suposiciones iniciales.
+
+#+begin_src python
+root2 = optimize.fsolve(f, -2.5)
+root2
+#+end_src
+
+
+* Estadísticas y números aleatorios
+
+El módulo scipy.stats contiene herramientas
+estadísticas y descripciones probabilisticas de
+procesos aleatorios. Los generadores de números
+aleatorios para varios procesos aleatorios se pueden
+encontrar en el paquete numpy.random.
+
+* Histogramas y funciones de densidad de probabilidad
+
+Dadas las observaciones de un proceso aleatorio, el
+histograma es un estimador de un proceso aleatorio de
+una función de densidad de probabilidad
+
+#+begin_src python
+a = np.random.normal(size=1000)
+bins = np.arange(-4, 5)
+bins
+
+histogram = np.histogram(a, bins=bins, normed=True)[0]
+bins = 0.5*(bins[1:] + bins[:-1])
+bins
+
+from scipy import stats
+b = stats.norm.pdf(bins)  # Distribución normal
+
+plt.plot(bins, histogram)
+
+plt.plot(bins, b)
+#+end_src
+
+* Percentiles
+
+La mediana es el valor que tiene la mitad de las
+observaciones debajo y la mitad arriba. Para calcular
+la mediana:
+
+#+begin_src python
+np.median(a)
+#+end_src
+
+La cuál también es llamada percentil 50, por que el 50%
+de la observación está bajo ella.
+
+#+begin_src python
+stats.scoreatpercentile(a, 50)
+#+end_src

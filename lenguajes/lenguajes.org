@@ -1,0 +1,580 @@
+#+title: Compatibilidad con otros lenguajes
+#+author: Miguel Piña
+#+date: [2016-06-23 jue 20:02]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Objetivo
+
+- Conocer las compatibilidades de python con los
+  lenguajes C, Java y Hylang
+
+* Python C-API
+
+La Python C-API es la columna vertebral del estándar
+Python interprete (a.k.a. CPython). Usando esta API es
+posible escribir una extensión de Python en C y
+C++. Obviamente esas extensiones pueden, por virtud de
+la compatibilidad con el lenguaje, llamar cualquier
+función escrita en C o en C++.
+
+Cuando usamos la Python C-API, usualmente escribimos
+mucho código repetido, primero para transformar los
+argumentos que fueron dados a la función y después para
+construir el tipo de regreso.
+
+* Ventajas y desventajas
+
+*Ventajas*
+- No requiere agregar bibliotecas adicionales
+- Agrega control de bajo nivel
+- Enteramente usable desde C++
+
+*Desventajas*
+- Puede requerir una cantidad sustancial de esfuerzo
+- Mucho código repetido
+- Debe ser compilado
+- Alto nivel de mantenimiento
+- No hay compatibilidad a través de las versiones de
+  Python como los cambios de la C-API
+- Puede generar muchos errores que son fáciles de crear
+  y difíciles de rastrear.
+
+* Ejemplo
+
+El siguiente módulo en C, hace de la función *cos* de
+math.h disponible para Python.
+
+#+begin_src C
+/* Ejemplo de la función coseno de math.h envuelta con la Python C-API. */
+#include <Python.h>
+#include <math.h>
+
+/*  Función coseno envuelta. */
+static PyObject* cos_func(PyObject* self, PyObject* args)
+{
+    double value;
+    double answer;
+
+    /*  Transforma la entrada, desde un float de python a un double de C */
+    if (!PyArg_ParseTuple(args, "d", &value))
+        return NULL;
+    /* Si la función anterior regresa -1, una excepción apropiada de
+     * Python va ser lanzada y la función simplemente regresa NULL
+     */
+
+    /* LLamamos cos desde la biblioteca libm */
+    answer = cos(value);
+
+    /*  Construye la salida de coseno, desde un double de C a un float de Python */
+    return Py_BuildValue("f", answer);
+}
+
+/*  Define la función en el módulo */
+static PyMethodDef CosMethods[] =
+{
+     {"cos_func", cos_func, METH_VARARGS, "Evalua el coseno"},
+     {NULL, NULL, 0, NULL}
+};
+
+/* Incialización del módulo */
+PyMODINIT_FUNC
+
+initcos_module(void)
+{
+     (void) Py_InitModule("cos_module", CosMethods);
+}
+#+end_src
+
+* Ejemplo
+
+Como se puede observar del código anterior, hay mucho
+de más tan sólo para masajear los tipos de los
+argumentos y el tipo de regreso, así como para la
+inicialización del módulo. Aunque esto se puede
+considerar un gasto amortizado cuando la extensión
+crece, el código de más para cada función se mantiene.
+
+La biblioteca =disutil= de python permite la carga y
+compilación de las /C-extensions/, usando un archivo
+conocido como =setup.py=, el cual contiene código como el
+que sigue.
+
+#+begin_src python
+from distutils.core import setup, Extension
+
+# define the extension module
+cos_module = Extension('cos_module', sources=['cos_module.c'])
+
+# run the setup
+setup(ext_modules=[cos_module])
+#+end_src
+
+* Ejemplo
+
+Y a partir del archivo anterior, podemos ocmpilar
+nuestro nuevo módulo:
+
+#+begin_src sh
+✔ ~/Documentos/Facultad/cursos/python/lenguajes [master|✚ 8…18]
+20:47 $ ls
+ cos_module.c  lenguajes.org  setup.py
+
+✔ ~/Documentos/Facultad/cursos/python/lenguajes [master|✚ 8…18]
+20:47 $ python setup.py build_ext --inplace
+running build_ext
+building 'cos_module' extension
+creating build
+creating build/temp.linux-x86_64-2.7
+x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c cos_module.c -o build/temp.linux-x86_64-2.7/cos_module.o
+x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_S
+OURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/cos_module.o -o /home/miguel/Documentos/Facultad/cursos/python/lenguajes/cos
+_module.so
+
+✔ ~/Documentos/Facultad/cursos/python/lenguajes [master|✚ 8…20]
+20:47 $ ls
+build  cos_module.c  cos_module.so  lenguajes.org  setup.py
+
+#+end_src
+
+Donde:
+
+- build_ext Es para construir el módulo extensión
+--inplace Va proveer la salida en el directorio actual
+
+* Soporte para Numpy
+
+Analogo a la Python C-API, Numpy, el cuál es
+implementado en si mismo como una C-extension, viene
+con Numpy-C-API. A través de esta API se pueden crear y
+manipular arrays desde C, esto cuando escribimos una
+C-extensión personalizada.
+
+* Ejemplo Numpy-C-API
+
+
+#+begin_src C
+/*  Ejemplo de uso de la función cos de math.h usando la Numpy-C-API */
+
+#include <Python.h>
+#include <numpy/arrayobject.h>
+#include <math.h>
+
+/*  Funcíon coseno envuelta */
+static PyObject* cos_func_np(PyObject* self, PyObject* args)
+{
+
+    PyArrayObject *in_array;
+    PyObject      *out_array;
+    NpyIter *in_iter;
+    NpyIter *out_iter;
+    NpyIter_IterNextFunc *in_iternext;
+    NpyIter_IterNextFunc *out_iternext;
+
+    if (!PyArg_ParseTuple(args, "O!", &PyArray_Type, &in_array))
+        return NULL;
+
+    out_array = PyArray_NewLikeArray(in_array, NPY_ANYORDER, NULL, 0);
+    if (out_array == NULL)
+        return NULL;
+
+    in_iter = NpyIter_New(in_array, NPY_ITER_READONLY, NPY_KEEPORDER,
+                             NPY_NO_CASTING, NULL);
+    if (in_iter == NULL)
+        goto fail;
+
+    out_iter = NpyIter_New((PyArrayObject *)out_array, NPY_ITER_READWRITE,
+                          NPY_KEEPORDER, NPY_NO_CASTING, NULL);
+    if (out_iter == NULL) {
+        NpyIter_Deallocate(in_iter);
+        goto fail;
+    }
+
+    in_iternext = NpyIter_GetIterNext(in_iter, NULL);
+    out_iternext = NpyIter_GetIterNext(out_iter, NULL);
+    if (in_iternext == NULL || out_iternext == NULL) {
+        NpyIter_Deallocate(in_iter);
+        NpyIter_Deallocate(out_iter);
+        goto fail;
+    }
+    double ** in_dataptr = (double **) NpyIter_GetDataPtrArray(in_iter);
+    double ** out_dataptr = (double **) NpyIter_GetDataPtrArray(out_iter);
+
+    do {
+        **out_dataptr = cos(**in_dataptr);
+    } while(in_iternext(in_iter) && out_iternext(out_iter));
+
+    NpyIter_Deallocate(in_iter);
+    NpyIter_Deallocate(out_iter);
+    Py_INCREF(out_array);
+    return out_array;
+
+    fail:
+        Py_XDECREF(out_array);
+        return NULL;
+}
+
+static PyMethodDef CosMethods[] =
+{
+     {"cos_func_np", cos_func_np, METH_VARARGS,
+         "evaluate the cosine on a numpy array"},
+     {NULL, NULL, 0, NULL}
+};
+
+PyMODINIT_FUNC
+initcos_module_np(void)
+{
+     (void) Py_InitModule("cos_module_np", CosMethods);
+     /* IMPORTANT: this must be called */
+     import_array();
+}
+#+end_src
+
+* Ejemplo Numpy
+
+Para compilar el módulo anterior, vamos a utilizar
+=disutils= de nueva cuenta. Además vamos a necesitar
+asegurar que se incluyan las cabeceras de Numpy usando
+=numpy.gen_include=.
+
+#+begin_src python
+from distutils.core import setup, Extension
+import numpy
+
+cos_module_np = Extension('cos_module_np', sources=['cos_module_np.c'],
+                          include_dirs=[numpy.get_include()])
+
+setup(ext_modules=[cos_module_np])
+#+end_src
+
+Para convencernos de que lo anterior funciona, vamos a
+ejecutar el siguiente script:
+
+#+begin_src python
+import cos_module_np
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(0, 2 * np.pi, 0.1)
+y = cos_module_np.cos_func_np(x)
+plt.plot(x, y)
+plt.show()
+#+end_src
+
+* Jython
+
+Jython es una implementación de Python usando Java. La
+implementación está construida sobre la JVM y es usada
+principlamente para ser un pegamento entre código en
+Python y Java.
+
+La forma sencilla de obtener Jython es a través de la
+descarga desde Maven Central.
+
+#+begin_src bash
+curl -o jython.jar http://search.maven.org/remotecontent?filepath=org/python/jython-standalone/2.7-b1/jython-standalone-2.7-b1.jar
+#+end_src
+
+* Probando Jython
+
+Una vez que se tenga Jython descargado, para probar la
+conexión con la JVM vamos a ejecutar el pequeño trozo
+de código.
+
+#+begin_src java
+import org.python.util.PythonInterpreter;
+import org.python.core.*;
+
+public class SimpleExample {
+   public static void main(String []args) throws PyException
+   {
+       PythonInterpreter pi = new PythonInterpreter();
+       pi.set("integer", new PyInteger(42));
+       pi.exec("square = integer*integer");
+       PyInteger square = (PyInteger)pi.get("square");
+       System.out.println("Cuadrado: " + square.asInt());
+   }
+}
+#+end_src
+
+El cuál vamos a compilar con:
+
+#+begin_src bash
+javac -cp jython.jar SimpleExample.java
+#+end_src
+
+Y ejecutar con:
+
+#+begin_src bash
+java -cp jython.jar:. SimpleExample
+#+end_src
+
+* Cortando el modelo Edit-Compile-Test Loop
+
+El modelo anterior necesitamos editar el código en Java
+y recompilar cada vez que necesitamos alguna
+modificación. Lo que remueve uno de los beneficios de
+Python.
+
+Para correr el código sin tener que recompilar,
+necesitamos crear un módulo de python y usar la clase
+PythonInterpreter para importar y ejecutar funciones.
+
+Vamos a crear un archivo llamado pymodule.py que
+implemente =square=.
+
+#+begin_src python
+def square(value):
+   return value*value
+#+end_src
+
+* Cortando el modelo Edit-Compile-Test Loop
+
+Ya que tenemos el módulo en Python, dentro de Java,
+vamos a escribir una clase llamada ImportExample como
+sigue:
+
+#+begin_src java
+import org.python.util.PythonInterpreter;
+import org.python.core.*;
+
+public class ImportExample {
+   public static void main(String [] args) throws PyException
+   {
+       PythonInterpreter pi = new PythonInterpreter();
+       pi.exec("from pymodule import square");
+       pi.set("integer", new PyInteger(42));
+       pi.exec("result = square(integer)");
+       pi.exec("print(result)");
+       PyInteger result = (PyInteger)pi.get("result");
+       System.out.println("result: "+ result.asInt());
+       PyFunction pf = (PyFunction)pi.get("square");
+       System.out.println(pf.__call__(new PyInteger(5)));
+   }
+}
+
+#+end_src
+
+
+* Duck-typing y Overloading
+
+#+begin_src java
+import org.python.util.PythonInterpreter;
+import org.python.core.*;
+
+public class CleanImportExample {
+   public class PyModule {
+       private PythonInterpreter interpreter;
+       private PyFunction py_square;
+
+       public PyModule() {
+           this.interpreter = new PythonInterpreter();;
+           this.interpreter.exec("from pymodule import square");
+           this.py_square = (PyFunction)this.interpreter.get("square");
+       }
+
+       public int square(int val) {
+           return py_square.__call__(new PyInteger(val)).asInt();
+       }
+
+       public double square(double val) {
+           return py_square.__call__(new PyFloat(val)).asDouble();
+       }
+
+   }
+
+   public void run() {
+       PyModule module = new PyModule();
+       System.out.println(module.square(2));
+       System.out.println(module.square(2.2));
+   }
+
+   public static void main(String [] args) throws PyException {
+       new CleanImportExample().run();
+   }
+
+}
+
+#+end_src
+
+* Desempeño
+
+Una de las desventajas de Jython es el desempeño, lo
+cuál es muy notorio a la hora de trabajar respecto a
+Python y Java respectivamente.
+
+Aunque Jython puede ser muy fácil de introducir al
+Stack de Java, el problema de meter un nuevo lenguaje y
+las nuevas dependencias, van a complicar tu stack.
+
+* HyLang
+
+HyLang es un dialecto de Lisp que convierte la
+estructura de Python, literalmente en un /abstract
+syntax tree/ de Python!
+
+Esto es muy padre por qué significa varias cosas.
+
+- Un lisp que se siente muy Pythonico
+- Para los Lispers, una gran forma de usar los poderes
+  locos de Lisp pero a través del mundo de las
+  bibliotecas de Python
+- Para los Pythonistas, una gran forma de explorar
+  Lisp, desde la comodidad de Python.
+- Para todos: un buen lenguaje en el que puedes
+  explotar un montón de ideas.
+
+* Instalación
+
+Para instalar Hylang, basta con crear un entorno
+virtualenv y usar pip para instalarlo de la siguiente
+forma:
+
+#+begin_src python
+pip install hy
+#+end_src
+
+* Ejemplos
+
+#+begin_src lisp
+(print "hello world")
+#+end_src
+
+#+begin_src python
+print "hello world"
+#+end_src
+
+#+begin_src lisp
+(+ 1 3)
+#+end_src
+
+#+begin_src python
+1 + 3
+#+end_src
+
+#+begin_src lisp
+(setv result (- (/ (+ 1 3 88) 2) 8))
+#+end_src
+
+#+begin_src python
+result = ((1 + 3 + 88) / 2) - 8
+#+end_src
+
+* Funciones
+
+#+begin_src python
+def simple_conversation():
+    print "Hello!  I'd like to get to know you.  Tell me about yourself!"
+    name = raw_input("What is your name? ")
+    age = raw_input("What is your age? ")
+    print "Hello " + name + "!  I see you are " + age + " years old."
+simple_conversation()
+#+end_src
+
+#+begin_src lisp
+(defn simple-conversation []
+   (print "Hello!  I'd like to get to know you.  Tell me about yourself!")
+   (setv name (raw-input "What is your name? "))
+   (setv age (raw-input "What is your age? "))
+   (print (+ "Hello " name "!  I see you are "
+              age " years old.")))
+
+(simple-conversation)
+#+end_src
+
+* Estructuras de Datos
+
+Podemos usar las estructuras de datos de python dentro de HyLang!
+
+#+begin_src python
+[1 2 3]
+{'dog': 'bark', 'cat': 'meow'}
+#{3 1 2}
+1/2
+'(1 2 3)
+(.strip " fooooo   ")
+#+end_src
+
+* Condicionales
+
+#+begin_src python
+somevar = 33
+if somevar > 50:
+    print "That variable is too big!"
+elif somevar < 10:
+    print "That variable is too small!"
+else:
+    print "That variable is jussssst right!"
+#+end_src
+
+#+begin_src lisp
+(setv somevar 33)
+(cond
+ [(> somevar 50)
+  (print "That variable is too big!")]
+ [(< somevar 10)
+  (print "That variable is too small!")]
+ [true
+  (print "That variable is jussssst right!")])
+#+end_src
+
+Y que pasa con el if?
+#+begin_src lisp
+(if (try-some-thing)
+  (do
+    (print "this is if true")
+    (print "and why not, let's keep talking about how true it is!))
+  (print "this one's still simply just false"))
+#+end_src
+
+* For
+
+#+BEGIN_SRC python
+for i in range(10):
+    print "'i' is now at " + str(i)
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(for [i (range 10)]
+  (print (+ "'i' is now at " (str i))))
+#+END_SRC
+
+* Importando bibliotecas
+
+#+BEGIN_SRC lisp
+(import os)
+
+(if (os.path.isdir "/tmp/somedir")
+  (os.mkdir "/tmp/somedir/anotherdir")
+  (print "Hey, that path isn't there!"))
+#+END_SRC
+
+* Abriendo archivos
+
+#+begin_src lisp
+(with [f (open "/tmp/data.in")]
+  (print (.read f)))
+#+end_src
+
+* Listas por comprensión
+
+#+begin_src python
+odds_squared = [pow(num, 2)  for num in range(100)  if num % 2 == 1]
+#+end_src
+
+
+#+begin_src lisp
+(setv odds-squared
+  (list-comp
+    (pow num 2)
+    (num (range 100))
+    (= (% num 2) 1)))
+#+end_src
+
+Creando un tablero de ajedrez
+
+#+begin_src lisp
+(list-comp
+  (, x y)
+  (x (range 8)
+   y "ABCDEFGH"))
+#+end_src

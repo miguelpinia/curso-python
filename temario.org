@@ -85,7 +85,7 @@ básica el editor Emacs.
   - Matplolib (pyplot)
   - Pandas
 
-** Compatibilidad con otros lenguajes (2 horas)
+** [[file:lenguajes/lenguajes.org][Compatibilidad con otros lenguajes]] (2 horas)
   - C
   - Java
   - Hylang

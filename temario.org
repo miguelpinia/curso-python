@@ -12,7 +12,7 @@ resolver problemas de distintas índoles.
 
 * Herramientas a usar
 
-En el curso se usará python 2.7, así como Emacs como editor y virtualenv como
+En el curso se usará python 3.5, así como Emacs como editor y virtualenv como
 gestor de entornos virtuales.
 
 * Condiciones para tomar el curso

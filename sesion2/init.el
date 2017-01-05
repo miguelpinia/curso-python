@@ -1,17 +1,19 @@
+;;; Package -- Summary
+;;; Commentary:
+;; Emacs Lisp code for development under python.
+;; Provee configuración para facilitar la programación en el lenguaje Python usando Emacs.
+
 ;; Modulo para la carga de paquetes de terceros
 (require 'package)
-;; Agrega a la lista el repositorio de marmalade
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;; Agrega a la lista el repositorio de tromey
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
-;; Agrega a la lista el repositorio de elpa (ya estaba cargado por default)
-(add-to-list 'package-archives
-	     '("elpa" . "http://elpa.gnu.org/packages/") t)
-;; Agrega a la lista el repositorio de melpa
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;;; Code:
+
+;; Establece la lista de repositorios de donde obtener paquetes para emacs.
+(setq package-archives '(("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("tromey" . "http://tromey.com/elpa/")
+                         ("elpa" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 ;; Permite cargar los repositorios definidos anteriormente
 (package-initialize)
 
@@ -53,17 +55,17 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward) ;; Busquedas por default
 (global-set-key (kbd "C-M-r") 'isearch-backward) ;; Busqueda por default
 (setq-default indent-tabs-mode nil) ;; No tabuladores duros
-(setq
- x-select-enable-clipboard t
- x-select-enable-primary t
- save-interprogram-paste-before-kill t
- apropos-do-all t
- mouse-yank-at-point t) ;; Permite la comunicación del clipbhoard
-(setq backup-directory-alist
-      `(("." . ,(concat user-emacs-directory "backups"))))
-(setq auto-save-default nil)
+(setq x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      auto-save-default nil
+      save-place-file (concat user-emacs-directory "places")) ;; Permite la comunicación con el clipboard del sistema
+
 (setq-default save-place t)
-(setq save-place-file (concat user-emacs-directory "places"))
+
 ;; (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
 ;; (add-hook 'python-mode-hook 'hc-highlight-trailing-whitespace)
 ;; (add-hook 'prog-mode-hook 'hc-highlight-trailing-whitespace)
@@ -139,3 +141,6 @@
 (setq py-autopep8-options '("--aggressive"))
 (setq py-autopep8-options '("--aggressive"))
 (setq jedi:complete-on-dot t)
+
+(provide 'init)
+;;; init.el ends here

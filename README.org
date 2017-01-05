@@ -2,12 +2,16 @@
 #+author: Miguel Piña
 #+date: [2016-06-12 dom 18:43]
 
-
 ** Motivación
 
- El presente repositorio pretende proveer el material usando en el curso de
- Python impartido en el periodo intersemestral de verano de la Facultad de
- Ciencias.
+El presente repositorio pretende proveer notas y código usado en el curso de
+*«Python»* impartido durante los periodo intersemestrales de la Facultad de
+Ciencias.
+
+** Herramientas para usar las notas y el código de este repositorio
+
+El presente texto y código a sido probado sobre GNU Emacs 24.5.1, python 3.5.2 y
+orgmode 9.0.2.
 
 ** Características del repositorio
 
@@ -37,7 +41,7 @@
 
  Durante la segunda sesión del curso, se implementó un archivo de configuración
  de emacs para tener un conjunto de características que facilitaran el desarrollo
- del código en python.
+ del código en Python.
 
  Esta configuración se encuentra disponible en el siguiente archivo: [[file:sesion2/init.el][init.el]], el
  cuál basta con ponerlo dentro de una carpeta nombrada como =.emacs.d=, en la cuál,

@@ -1,0 +1,74 @@
+#+title: Tipos en python
+#+author: Miguel Piña
+#+date: [2016-06-14 mar 07:31]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+* Tipos de datos primitivos
+
+- Numéricos
+- Booleanos
+- Cadenas
+- Listas
+- Tuplas
+- Conjuntos
+- Diccionarios
+
+* Tipos numéricos
+
+En python vamos a tener 4 tipos numéricos soportados:
+
+- int :: Los números enteros son implementados
+     simplemente usando long en C, los cuáles tienen
+     una precisión de 32 bits.
+- float :: Los números flotantes
+- long :: Los números de tipo Long tiene precisión
+     ilimitada
+- complex :: Tienen una parte real y una parte
+     imaginaria, los cuales para usarlos basta con
+     extraerlos usando z.real y z.imag.
+
+* Sintaxis
+
+Los tipos anteriores basta con definirlos como
+literales, pero los que tienen una sintaxis especial
+son los long y los complex.
+
+Para representar un elemento de tipo long basta con
+escribir:
+
+#+BEGIN_CENTER
+kL
+#+END_CENTER
+
+Donde *k* es un número. Para los números complejos se escriben así:
+
+#+BEGIN_CENTER
+K + Pj
+#+END_CENTER
+
+Donde *K* es un número real y *P* es un número imaginario
+
+
+
+
+
+
+* Operaciones
+
+- x + y
+- x - y
+- x * y
+- x / y
+- x // y
+- x % y
+- -x
+- +x
+- abs(x)
+- int(x)
+- long(x)
+- float(x)
+- complex(re,im)
+- c.conjugate()
+- divmod(x, y)
+- pow(x, y)
+- x ** y

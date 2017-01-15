@@ -2,55 +2,64 @@
 #+author: Miguel Piña
 #+date: [2016-06-12 dom 18:43]
 
-** Motivación
+* Motivación
 
-El presente repositorio pretende proveer notas y código usado en el curso de
-*«Python»* impartido durante los periodo intersemestrales de la Facultad de
-Ciencias.
+El presente repositorio pretende proveer notas y código
+usado en el curso de *«Python»* impartido durante los
+periodo intersemestrales de la Facultad de Ciencias.
 
-** Herramientas para usar las notas y el código de este repositorio
+* Herramientas para usar las notas y el código de este repositorio
 
-El presente texto y código a sido probado sobre GNU Emacs 24.5.1, python 3.5.2 y
-orgmode 9.0.2.
+El presente texto y código a sido probado sobre GNU
+Emacs 24.5.1, python 3.5.2 y orgmode 9.0.2.
 
-** Características del repositorio
+* Características del repositorio
 
- A continuación se listan algunas de las características de este repositorio.
+ A continuación se listan algunas de las
+ características de este repositorio.
 
-*** Formato
+** Formato
 
-  La mayoría del material será en formato org-mode y eventualmente proyectos
-  hechos vía virtualenv, para facilitar su reproducción.
+ La mayoría del material será en formato org-mode y
+ eventualmente proyectos hechos vía virtualenv, para
+ facilitar su reproducción.
 
-  El temario del curso mantiene los enlaces a los respectivos archivos org que
-  contienen el texto de las presentaciones hechas con org-mode.
+ El temario del curso mantiene los enlaces a los
+ respectivos archivos org que contienen el texto de
+ las presentaciones hechas con org-mode.
 
-*** Visualización de la información
+** Visualización de la información
 
-  Para visualizarlas las presentaciones correctamente, es necesario tener
-  instalado emacs (> 24.3) y tener instalado el paquete =epresent= para emacs.
+ Para visualizarlas las presentaciones correctamente,
+ es necesario tener instalado emacs (> 24.3) y tener
+ instalado el paquete =epresent= para emacs.
 
-*** Temario del curso
+** Temario del curso
 
-  El temario del curso se encuentra disponible en [[file:temario.org][la siguiente liga.]]
+ El temario del curso se encuentra disponible en [[file:temario.org][la
+ siguiente liga.]]
 
-  Dentro del archivo, se mantiene una serie de enlaces a las presentaciones y el
-  código desarrollado durante el curso.
+ Dentro del archivo, se mantiene una serie de enlaces
+ a las presentaciones y el código desarrollado durante
+ el curso.
 
-** Configuración de emacs
+* Configuración de emacs
 
- Durante la segunda sesión del curso, se implementó un archivo de configuración
- de emacs para tener un conjunto de características que facilitaran el desarrollo
- del código en Python.
+ Durante la segunda sesión del curso, se implementó un
+ archivo de configuración de emacs para tener un
+ conjunto de características que facilitaran el
+ desarrollo del código en Python.
 
- Esta configuración se encuentra disponible en el siguiente archivo: [[file:sesion2/init.el][init.el]], el
- cuál basta con ponerlo dentro de una carpeta nombrada como =.emacs.d=, en la cuál,
- emacs va a solicitar toda la información de configuración al arranque.
+ Esta configuración se encuentra disponible en el
+ siguiente archivo: [[file:sesion2/init.el][init.el]], el cuál basta con ponerlo
+ dentro de una carpeta nombrada como =.emacs.d=, en la
+ cuál, emacs va a solicitar toda la información de
+ configuración al arranque.
 
-** Ejercicios
+* Ejercicios
 
- En el archivo [[file:ejercicios.org][ejercicios.org]] se encuentran una serie de ejercicios para ser
- realizado con python
+ En el archivo [[file:ejercicios.org][ejercicios.org]] se encuentran una serie
+ de ejercicios para ser realizado con python
 
  *Atentamente:*
 

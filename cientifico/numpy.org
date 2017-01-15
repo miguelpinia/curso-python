@@ -390,6 +390,7 @@ Para instalarlo dentro de nuestro entorno, basta con hacer
 
 #+begin_src sh
 pip install scipy
+pip install pillow
 #+end_src
 
 * Scipy

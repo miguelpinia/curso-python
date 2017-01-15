@@ -1,0 +1,38 @@
+#+title: Más material
+#+author: Miguel Piña
+#+date: [2016-06-12 dom 20:05]
+#+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
+
+
+
+* 7 Pasos para ser maestro de Machine Learning con Python
+
+** Habilidades básicas de python
+Cosas por hacer:
+- [ ] [[http://docs.continuum.io/anaconda/install][Instalar Anaconda]]
+  #+begin_src bash
+    wget -o /tmp/log -P/tmp http://repo.continuum.io/archive/Anaconda3-4.0.0-Linux-x86_64.sh
+    cd /tmp/
+    md5sum -c md5sums.md5
+  #+end_src
+
+- [ ] Libro de [[http://learnpythonthehardway.org/book/][python (Python the hard way).]]
+- [ ] [[http://www.engr.ucsb.edu/~shell/che210d/python.pdf][An Introduction to Python for Scientific Computing]]
+** Fundamentos y Habilidades en Machine Learning
+- [ ] [[http://www.kdnuggets.com/2015/05/data-science-machine-learning-scientist-definition-jargon.html][¿Qué es un data scientist?]]
+- [ ] [[https://en.wikipedia.org/wiki/Kernel_method][Kernel Methods]]
+- [ ] [[http://www.holehouse.org/mlclass/][Notas no oficiales del curso de Andrew Ng]]
+- [ ] [[http://www.cs.cmu.edu/~ninamf/courses/601sp15/lectures.shtml][Lecturas de Machine Learning de Tom Mitchell]]
+** Conocimiento de paquetes científicos en Python
+*** Numpy
+- [ ] [[http://www.numpy.org/]]
+*** Pandas
+- [ ] [[http://pandas.pydata.org/]]
+- [ ] [[http://pandas.pydata.org/pandas-docs/stable/10min.html][10 mins to pandas]]
+*** Matplotlib
+- [ ] [[http://matplotlib.org/]]
+*** scikit-learn
+- [ ] [[http://scikit-learn.org/stable/]]
+** Getting Started with Machine Learning in Python
+** Machine Learning Topics with Python
+[[http://www.kdnuggets.com/2015/11/seven-steps-machine-learning-python.html/2]]

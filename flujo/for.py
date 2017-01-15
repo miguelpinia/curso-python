@@ -26,6 +26,25 @@ for x in collection:
     print x
 
 list_of_lists = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
 for lista in list_of_lists:
     for x in lista:
         print x
+
+import time
+
+# use time.time() on Linux
+
+start = time.clock()
+for x in range(10000000):
+    pass
+stop = time.clock()
+
+print stop - start
+
+start = time.clock()
+for x in xrange(10000000):
+    pass
+stop = time.clock()
+
+print stop - start

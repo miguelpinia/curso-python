@@ -6,24 +6,26 @@
 
 * Objetivo
 
-El objetivo del curso es obtener conocimiento básico acerca de python y las distintas
-herramientas que lo componen. Así como su sintaxis y semántica para ser utilizado para
-resolver problemas de distintas índoles.
+El objetivo del curso es obtener conocimiento básico
+acerca de python y las distintas herramientas que lo
+componen. Así como su sintaxis y semántica para ser
+utilizado para resolver problemas de distintas índoles.
 
 * Herramientas a usar
 
-En el curso se usará python 3.5, así como Emacs como editor y virtualenv como
-gestor de entornos virtuales.
+Durante el curso usaremos Python 3.5.2, Emacs 24.5.1 y
+orgmode 9.0.2.
 
 * Condiciones para tomar el curso
 
-Es necesario que el alumno conozca al menos un lenguaje de programación para
-tomar el curso, ya que muchos conceptos relacionados con programación
-estructurada y/o programación orientada a objetos se darán por hecho que ya se
-conocen.
+Es necesario que el alumno conozca al menos un lenguaje
+de programación para tomar el curso, ya que muchos
+conceptos relacionados con programación estructurada
+y/o programación orientada a objetos se darán por hecho
+que ya se conocen.
 
-Además es altamente recomendable que el alumno sepa manejar al menos de manera
-básica el editor Emacs.
+Además es altamente recomendable que el alumno sepa
+manejar al menos de manera básica el editor Emacs.
 
 * Temario
 ** [[file:introduccion/introduccion.org][Introducción]] (3 horas).

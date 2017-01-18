@@ -157,18 +157,32 @@ la siguiente forma:
 lista = [1, 2, 3]
 #+END_SRC
 
+Esta estructura de datos es de tamaño dinámico y puede
+ser modificada en tiempo de ejecución.
+
 * Operaciones de listas
 
-- l.append(x)
-- l.extend(k) ó l += k
-- l *= n
-- l.count(x)
-- l.index(x, [i, [j]])
-- l.insert(i, x)
-- l.pop([i])
-- l.remove(x)
-- l.reverse()
-- l.sort([cmp[, key[, reverse]]])
+- l.append(x) :: agrega el elemento x al final de la
+     lista. Es equivalente a l[len(l):] = [x]
+- l.extend(L) :: Extiende la lista *l* con los elementos
+     de *L*, esto sería equivalente a l += k ó l[len(l):]
+     = L
+- l *= n :: Repite la lista un número /n/ de veces.
+- l.count(x) :: Cuenta el número de apariciones que
+     tiene el elemento *x* en *l*
+- l.index(x) :: Regresa el índice de la lista donde
+     aparece por primera vez *x* en *l*
+- l.insert(i, x) :: Inserta *x* en la posición *i*.
+- l.pop([i]) :: Sin argumento, elimina y regresa el
+     último elemento de la lista. Con argumento,
+     elimina y regresa el elemento en la posición *i*.
+- l.remove(x) :: Elimina el primer elemento cuyo valor
+     es *x*.
+- l.reverse() :: Invierte de posición cada uno de los
+     elementos de la lista *l*
+- l.sort(key=None, reverse=False) :: Ordena los
+     elementos de la lista usando un ordenamiento
+     lexicográfico.
 
 * Tuplas
 

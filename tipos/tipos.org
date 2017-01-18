@@ -184,6 +184,34 @@ ser modificada en tiempo de ejecución.
      elementos de la lista usando un ordenamiento
      lexicográfico.
 
+* Ejemplo de listas
+
+#+begin_src python
+# Declaramos una lista cualquiera
+a = [66.25, 333, 333, 1, 1234.5]
+# Imprimimos el número de apariciones de varios elementos
+print(a.count(333), a.count(66.25), a.count('x'))
+# Inserta 2 en la última posición
+a.insert(2, -1)
+# Inserta 333 al finala de la lista
+a.append(333)
+a
+# Regresa el primer índice donde aparece 333
+a.index(333)
+# Elimina 333
+a.remove(333)
+a
+# Imprime la lista en reversa
+a.reverse()
+a
+# Ordena la lista
+a.sort()
+a
+# Extrae el último elemento de la lista
+a.pop()
+a
+#+end_src
+
 * Tuplas
 
 Similar a las listas, sólo que estas representan

@@ -15,11 +15,11 @@
 
 * Tipos booleanos
 
-En python cualquier objeto puede ser probado a
-verdadero, el cuál se puede usar dentro de las
-condicionales de un *if* o un *while* (los cuales
-hablaremos de ellos más adelante). Los siguiente
-objetos son considerados falsos:
+En python cualquier objeto se evalua a verdadero, el
+cuál se puede usar dentro de las condicionales de una
+condicional *if* o un ciclo *while* (los cuales hablaremos
+de ellos más adelante). Los siguiente objetos son
+considerados falsos:
 
 - None
 - False
@@ -36,12 +36,13 @@ son las siguientes:
 - and :: Evaluación Y
 - or :: Evaluación Ó
 
-Nota: Los dos últimos son operadores de
-corto-circuito. Es decir, para el *and*, si el primer
-operando se evalua a falso, toda la expresión se evalua
-a falso. En el caso del *or* si el primer operando se
-evalua a verdadero, toda la expresión se evalua a
-verdadero.
+
+- Nota :: Los dos últimos son operadores de
+     corto-circuito. Es decir, para el *and*, si el
+     primer operando se evalua a falso, toda la
+     expresión se evalua a falso. En el caso del *or* si
+     el primer operando se evalua a verdadero, toda la
+     expresión se evalua a verdadero.
 
 * Comparaciones
 
@@ -75,18 +76,8 @@ En python vamos a tener 4 tipos numéricos soportados:
 
 * Sintaxis
 
-Los tipos anteriores basta con definirlos como
-literales, pero los que tienen una sintaxis especial
-son los long y los complex.
-
-Para representar un elemento de tipo long basta con
-escribir:
-
-#+BEGIN_CENTER
-kL
-#+END_CENTER
-
-Donde *k* es un número. Para los números complejos se escriben así:
+- Complejo :: Donde *k* es un número. Para los números
+     complejos se escriben así:
 
 #+BEGIN_CENTER
 K + Pj
@@ -107,7 +98,6 @@ Las operaciones definidas sobre estos tipos de datos son las siguientes:
 - -x :: Negación
 - abs(x) :: Valor absoluto
 - int(x) :: Cast a entero
-- long(x) :: Cast a Long
 - float(x) :: Cast a Float
 - complex(re,im) :: Cast a número complejo
 - c.conjugate() :: Conjunto del número complejo (identidad en los números reales)

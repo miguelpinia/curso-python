@@ -3,7 +3,7 @@
 #+date: [2016-06-16 jue 22:40]
 #+setupfile: ~/proyectos/org-html-themes/setup/theme-bigblow.setup
 
-* Ejercicios 17 de junio de 2016
+* Ejercicios
 
 Usando python, resolver los siguientes problemas.
 

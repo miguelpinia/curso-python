@@ -31,8 +31,8 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(python-mode py-autopep8
-    yasnippet jedi auto-complete helm
+  '(py-autopep8
+    auto-complete helm
     autopair projectile flymake flycheck))
 
 (dolist (p my-packages)
@@ -46,7 +46,7 @@
 (global-linum-mode) ;; Establece el número de linea del lado izquierdo.
 (setq column-number-mode t) ;; Pone el número de linea y columna en el modeline.
 (setq-default frame-title-format "%b (%f)") ;; Cambiamos el título del Frame.
-(global-hl-line-mode 0);; Resalta la linea actual.
+(global-hl-line-mode 1);; Resalta la linea actual.
 (show-paren-mode 1) ;; Resalta el apareamiento de parentesis, llaves, etc.
 (require 'flycheck) ;; Permite la verificación de la sintaxis al "vuelo".
 (global-flycheck-mode t)
@@ -66,17 +66,12 @@
 
 (setq-default save-place t)
 
-;; (add-hook 'font-lock-mode-hook 'hc-highlight-trailing-whitespace)
-;; (add-hook 'python-mode-hook 'hc-highlight-trailing-whitespace)
-;; (add-hook 'prog-mode-hook 'hc-highlight-trailing-whitespace)
 (add-hook 'prog-mode-hook
            (lambda ()
              (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 (add-hook 'prog-mode-hook
           (lambda ()
             (add-to-list 'write-file-functions 'delete-blank-lines)))
-(add-hook 'python-mode-hook 'column-enforce-mode)
-(add-hook 'prog-mode-hook 'column-enforce-mode)
 ;; Comentarios
 (defun toggle-comment-on-line ()
   "Comenta o descomenta la línea actual."
@@ -89,7 +84,6 @@
 (set-default 'ac-sources
              '(ac-source-abbrev
                ac-source-dictionary
-               ac-source-yasnippet
                ac-source-words-in-buffer
                ac-source-words-in-same-mode-buffers
                ac-source-semantic))
@@ -118,20 +112,9 @@
 (global-set-key (kbd "C-x b") 'helm-mini)
 (require 'py-autopep8);; Las reglas de buena escritura de código.
 (require 'autopair);; Pareamiento automático de paréntesis y otros.
-(require 'yasnippet);; Snippets de código.
-(require 'jedi);; Herramientas para trabajar con python dinámicamente
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 (setq py-electric-colon-active t)
 (add-hook 'python-mode-hook 'autopair-mode)
-(add-hook 'python-mode-hook 'yas-minor-mode)
-(add-hook 'python-mode-hook
-	  (lambda ()
-	    (linum-mode 0)
-	    (jedi:setup)
-	    (jedi:ac-setup)
-            (local-set-key "\C-cd" 'jedi:show-doc)
-            (local-set-key (kbd "M-SPC") 'jedi:complete)
-            (local-set-key (kbd "M-.") 'jedi:goto-definition)))
 (add-hook 'python-mode-hook 'auto-complete-mode)
 (add-hook 'inferior-python-mode-hook (lambda ()
                                        (linum-mode 0)))
@@ -140,7 +123,6 @@
 (setq py-autopep8-options '("--inplace"))
 (setq py-autopep8-options '("--aggressive"))
 (setq py-autopep8-options '("--aggressive"))
-(setq jedi:complete-on-dot t)
 
 (provide 'init)
 ;;; init.el ends here

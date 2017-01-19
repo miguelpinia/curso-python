@@ -212,6 +212,30 @@ a.pop()
 a
 #+end_src
 
+* Usando listas como pilas
+
+La implementación de varias funciones de las listas
+permiten que estas sean utilizadas como pilas. La
+operación de las pilas se puede decir de forma sencilla
+que es una estructura LIFO (last-in first-out). Para
+agregar un elemento al principio de la lista, se usa
+*append()*, mientras que para extraer, usamos *pop()* sin
+un índice explicito.
+
+
+#+begin_src python
+stack = [3, 4, 5]
+stack.append(6)
+stack.append(6)
+stack.append(7)
+stack
+stack.pop()
+stack
+stack.pop()
+stack.pop()
+stack
+#+end_src
+
 * Tuplas
 
 Similar a las listas, sólo que estas representan

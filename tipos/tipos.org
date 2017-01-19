@@ -215,12 +215,11 @@ a
 * Usando listas como pilas
 
 La implementación de varias funciones de las listas
-permiten que estas sean utilizadas como pilas. La
-operación de las pilas se puede decir de forma sencilla
-que es una estructura LIFO (last-in first-out). Para
-agregar un elemento al principio de la lista, se usa
-*append()*, mientras que para extraer, usamos *pop()* sin
-un índice explicito.
+permiten que estas sean utilizadas como pilas. Las
+pilas se puede describir como una estructura LIFO
+(last-in first-out). Para agregar un elemento al
+principio de la lista, se usa *append()*, mientras que
+para extraer, usamos *pop()* sin un índice explicito.
 
 
 #+begin_src python
@@ -236,6 +235,33 @@ stack.pop()
 stack
 #+end_src
 
+* Usando listas como colas
+
+También es posible el utilizar el uso de las listas
+para que sean utilizadas como colas. Las colas se puede
+describir una estructura FIFO (first-in,
+first-out). Sin embargo mientras que appends y pops
+realizados al final de la listas son relativamente
+rápidos, hacer inserciones o extracciones desde el
+principio suele ser lento (esto por qué todos los
+elementos tienen que ser reacomodados).
+
+Para implementar una cola, usen collections.deque, la
+cuál fue diseñada para realizar inserciones y
+eliminaciones rápidas desde ambos lados de una
+lista. POr ejemplo:
+
+
+#+begin_src python
+from collections import deque
+queue = deque(["Eric", "John", "Michael"])
+queue.append("Terry")           # Terry arrives
+queue.append("Graham")          # Graham arrives
+queue.popleft()                 # The first to arrive now leaves
+queue.popleft()                 # The second to arrive now leaves
+queue                           # Remaining queue in order of arrival
+#+end_src
+
 * Tuplas
 
 Similar a las listas, sólo que estas representan
@@ -245,6 +271,8 @@ paréntesis.
 
 #+BEGIN_SRC python
 tupla = (1, 2, 3)
+help(tupla.count)
+help(tupla.index)
 #+END_SRC
 
 * Conjuntos
@@ -279,7 +307,7 @@ employees = engineers | programmers | managers           # union
 engineering_management = engineers & managers            # intersección
 fulltime_management = managers - engineers - programmers # diferencia
 engineers.add('Marvin')                                  # Agrega
-print engineers
+print(engineers)
 
 employees.issuperset(engineers)     # prueba de superconjunto
 
@@ -288,7 +316,7 @@ employees.issuperset(engineers)
 
 for group in [engineers, programmers, managers, employees]:
     group.discard('Susana')          # Eliminación incodicional
-    print group
+    print(group)
 #+end_src
 
 * Diccionarios

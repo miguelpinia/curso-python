@@ -237,7 +237,7 @@ stack
 
 * Usando listas como colas
 
-También es posible el utilizar el uso de las listas
+También es posible hacer uso de las listas
 para que sean utilizadas como colas. Las colas se puede
 describir una estructura FIFO (first-in,
 first-out). Sin embargo mientras que appends y pops
@@ -289,7 +289,7 @@ Set(['a','b','c'])
 
 - s.update(t)	s |= t
 - s.intersection_update(t)	s &= t
-- s.difference_update(t)	s -= t
+- s.difference_ qupdate(t)	s -= t
 - s.symmetric_difference_update(t)	s ^= t
 - s.add(x)
 - s.remove(x)
@@ -337,7 +337,7 @@ a == b == c == d == e
 
 * Operaciones sobre diccionarios
 
-- len(d)
+- len(d) :: Devuelve la longitud del diccionario *d*.
 - d[key]
 - d[key] = value
 - key in d
@@ -346,6 +346,3 @@ a == b == c == d == e
 - d.clear()
 - d.get(key[, default])
 - d.items()
-- d.iteritems()
-- d.itervalues()
-- d.iterkeys()

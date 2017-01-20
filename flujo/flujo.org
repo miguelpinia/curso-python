@@ -12,20 +12,21 @@ se ejecutan las instrucciones que se definan.
 Además del *if*, tenemos *elif* y *else*.
 
 #+begin_src python
-x = int(raw_input("Ingresa un entero: "))
+x = int(input("Ingresa un entero: "))
 
 if x < 0:
     x = 0
-    print 'Numero negativo cambiado a cero'
+    print('Numero negativo cambiado a cero')
 elif x == 0:
-    print 'Cero'
+    print('Cero')
 elif x == 1:
-    print 'Uno'
+    print('Uno')
 else:
-    print 'Mas'
+    print('Número mayor que uno')
 #+end_src
 
 * Ejercicio
+
 Usando las definiciones del índice de masa corporal,
 implementar un programa que le pida al usuario su
 estatura y su peso, a partir de esto decirle cuál es la
@@ -64,41 +65,37 @@ for iter_var_1 in secuencia_1:
         instrucciones
 #+end_src
 
-* Range vs XRange
+* Range
 
 La función *range* crea la lista completa de elementos
 definida por la entrada con la que se le
-alimente. Mientras que la función *xrange* crea un
-generador de números y los va creando conforme los va
-necesitando.
-
-Es por esto que siempre se prefiere usar *xrange* sobre *range*.
+alimente.
 
 * Ejemplos for
 
 #+begin_src python
-for x in xrange(1, 11):
-    for y in xrange(1, 11):
-        print '%d * %d = %d' % (x, y, x*y)
+for x in range(1, 11):
+    for y in range(1, 11):
+        print('%d * %d = %d' % (x, y, x*y))
 #+end_src
 
 #+begin_src python
-for x in xrange(3):
+for x in range(3):
     if x == 1:
         break
 #+end_src
 
 #+begin_src python
-for x in xrange(3):
-    print x
+for x in range(3):
+    print(x)
 else:
-    print 'Final x = %d' % (x)
+    print('Final x = %d' % (x))
 #+end_src
 
 #+begin_src python
 string = "Hello World"
 for x in string:
-    print x
+    print(x)
 #+end_src
 
 * Ejemplos for
@@ -106,14 +103,14 @@ for x in string:
 #+begin_src python
 collection = ['hey', 5, 'd']
 for x in collection:
-    print x
+    print(x)
 #+end_src
 
 #+begin_src python
 list_of_lists = [ [1, 2, 3], [4, 5, 6], [7, 8, 9]]
 for list in list_of_lists:
     for x in list:
-        print x
+        print(x)
 #+end_src
 
 
@@ -148,13 +145,6 @@ for x in range(10000000):
 stop = time.clock()
 
 print stop - start
-
-start = time.clock()
-for x in xrange(10000000):
-    pass
-stop = time.clock()
-
-print stop - start
 #+end_src
 
 * Ejemplos for
@@ -170,13 +160,6 @@ for x in range(1000):
 stop = time.clock()
 
 print stop-start
-
-start = time.clock()
-for x in xrange(1000):
-    pass
-stop = time.clock()
-
-print stop-start
 #+end_src
 
 #+begin_src python
@@ -186,7 +169,7 @@ def my_range(start, end, step):
         start += step
 
 for x in my_range(1, 10, 0.5):
-    print x
+    print(x)
 #+end_src
 
 * While
@@ -198,15 +181,15 @@ se ejecuta un número /n/ de veces, si no hasta que se
 cumple cierta condición.
 
 #+begin_src python
-n = raw_input("Please enter 'hello':")
+n = input("Please enter 'hello':")
 while n.strip() != 'hello':
-    n = raw_input("Please enter 'hello':")
+    n = input("Please enter 'hello':")
 #+end_src
 
 
 #+begin_src python
 while True:
-    n = raw_input("Please enter 'hello':")
+    n = input("Please enter 'hello':")
     if n.strip() == 'hello':
         break
 #+end_src

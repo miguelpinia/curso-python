@@ -20,7 +20,7 @@ disponible en el valor de la variable global
 Escribir un archivo llamada *fibo.py* en el directorio de
 tu elección, con el siguiente código:
 
-#+BEGIN_SRC python :tangle yes
+#+BEGIN_SRC python
 #!/usr/bin/env python3
 
 def fib(n):
@@ -66,7 +66,7 @@ funciones definidas en el módulo. Por lo tanto, el
 autor de un módulo puede usar variables globales en el
 módulo sin preocuparse acerca de conflictos con una
 variable global del usuario. Por otro lado, si sabes lo
-que estás haciendo podés tocar las variables globales
+que estás haciendo puedes tocar las variables globales
 de un módulo con la misma notación usada para referirte
 a sus funciones, nombremodulo.nombreitem.
 
@@ -104,7 +104,7 @@ fib(500)
 #+end_src
 
 Esto importa todos los nombres excepto aquellos que
-comienzan con un subrayado (_).
+comienzan con un guión bajo (_).
 
 En general la práctica de importar * de un módulo o
 paquete está muy mal vista, ya que frecuentemente
@@ -115,8 +115,9 @@ usarlo para ahorrar tecleo en sesiones interactivas.
      una vez por sesión del intérprete. Por lo tanto, si
      modificas los módulos, tienes que reiniciar el
      intérprete – o, si es sólo un módulo que quieres probar
-     interactivamente, usá reload(), por ejemplo
-     reload(nombremodulo).
+     interactivamente, usa *importlib.reload()*, por ejemplo
+     *importlib.reload(nombremodulo)* (hay que importar
+     el módulo *importlib* previamente).
 
 * Paths (O el camino de la búsqueda hacia los módulos)
 

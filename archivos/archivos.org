@@ -5,17 +5,29 @@
 
 * Archivos
 
-Python nos provee una interfaz simple y sencilla para trabajar con
-archivos. Para usar un archivo basta con ejecutemos el siguiente comando.
+Python nos provee una interfaz simple y sencilla para
+trabajar con archivos. Para usar un archivo basta con
+ejecutemos el siguiente comando.
 
 #+begin_src python
-archivo = open("ruta al archivo")
+archivo = open("ruta al archivo", modo)
+print(archivo)
+help(archivo)
 #+end_src
 
-Donde la función open, asigna a la variable archivo un
-valor de tipo file. La función open además recibe el
-modo con el que va a operar el archivo, los cuáles
-listamos a continuación.
+El primer argumento es una cadena conteniendo el nombre
+de archivo. El segundo argumento es otra cadena
+conteniendo unos pocos caracteres que describen la
+forma en que el archivo será usado. El modo puede ser
+'r' cuando el archivo será solamente leído, 'w' para
+sólo escribirlo (un archivo existente con el mismo
+nombre será borrado), y 'a' abre el archivo para
+agregarle información; cualquier dato escrito al
+archivo será automáticamente agregado al final. 'r+'
+abre el archivo tanto para leerlo como para
+escribirlo. El argumento modo es opcional; si se omite
+se asume 'r'.
+
 
 | Indicador | Modo                           |
 |-----------+--------------------------------|
@@ -58,15 +70,8 @@ for linea in archivo.readlines():
 
 * Métodos de file
 
-- seek(byte) :: Mueve el puntero hacia el bit inidicado
-
-#+begin_src python
-archivo = open("foo.txt")
-contenido = archivo.read()
-archivo.seek(0)
-#+end_src
-
-- tell() :: Retorna la posición actual del puntero.
+- tell() :: Retorna la posición actual del puntero
+     (medido en bytes).
 
 #+begin_src python
 archivo = open("foo.txt", "r")
@@ -76,6 +81,15 @@ mas = archivo.read(archivo.tell() * 2)
 if archivo.tell() > 50:
     archivo.seek(50)
 #+end_src
+
+- seek(byte) :: Mueve el puntero hacia el bit inidicado
+
+#+begin_src python
+archivo = open("foo.txt")
+contenido = archivo.read()
+archivo.seek(0)
+#+end_src
+
 
 - write(cadena) :: Escribe cadena dentro del archivo.
 
@@ -144,12 +158,12 @@ with open("foo.txt", "r") as archivo:
 print archivo.closed
 #+end_src
 
-Cuando una estructura with finaliza, Python,
-automáticamente invoca al método close(), como se puede
-ver en el valor de la propiedad closed.
+Cuando una estructura *with* finaliza, Python,
+automáticamente invoca al método *close()*, como se puede
+ver en el valor de la propiedad *closed*.
 
 Como también se deja ver en el ejemplo, la sentencia
-with utiliza un alias para el objeto file, lo que
+*with* utiliza un *alias* para el objeto file, lo que
 permite acceder al objeto file, justamente, por el
 alias indicado.
 

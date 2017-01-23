@@ -50,7 +50,7 @@ se asume 'r'.
 #+BEGIN_SRC python
 archivo = open("foo.txt")
 contenido = archivo.read()
-print contenido
+print(contenido)
 #+END_SRC
 
 - readline([bytes]) :: Lee una linea del archivo
@@ -65,7 +65,7 @@ linea = archivo.readline()
 #+begin_src python
 archivo = open("foo.txt")
 for linea in archivo.readlines():
-    print linea
+    print(linea)
 #+end_src
 
 * Métodos de file
@@ -102,7 +102,7 @@ archivo.write('Nueva linea')
 archivo.seek(final_de_archivo)
 nuevo_contenido = archivo.read()
 
-print nuevo_contenido
+print(nuevo_contenido)
 #+end_src
 
 * Métodos de file
@@ -119,8 +119,8 @@ lista = ['Línea 1\n', 'Línea 2']
 archivo.writelines(lista)
 archivo.seek(final_de_archivo)
 
-print archivo.readline()
-print archivo.readline()
+print(archivo.readline())
+print(archivo.readline())
 #+end_src
 
 - close() :: Cierra un archivo.
@@ -129,7 +129,7 @@ print archivo.readline()
 archivo = open("remeras.txt", "r")
 contenido = archivo.read()
 archivo.close()
-print contenido
+print(contenido)
 #+end_src
 
 
@@ -155,7 +155,7 @@ uso, se cierren.
 with open("foo.txt", "r") as archivo:
     contenido = archivo.read()
 
-print archivo.closed
+print(archivo.closed)
 #+end_src
 
 Cuando una estructura *with* finaliza, Python,

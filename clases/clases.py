@@ -1,25 +1,29 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+
+from math import pi
 
 
-class Foo:
+class Foo(object):
     a = 1
     b = "Soy Foo"
 
 
-class Gato:
+class Gato(object):
     numero_de_patas = 0
     color = "negro"
+    cv = ""
 
     def __init__(self, nombre="Juan"):
         self.nombre = nombre
 
     def dormir(self):
-        print "Zzzz..."
+        print("Yo el gato {} estoy durmiendo. Zzzz...".format(self.nombre))
 
     def molestar_humano(self):
         while True:
-            acariciar = raw_input("Acariciame ")
+            acariciar = input(
+                "Acariciame a mi, el gato {}".format(
+                    self.nombre))
             if acariciar == "Acariciado":
                 break
 
@@ -27,28 +31,33 @@ gato = Gato()
 gato.numero_de_patas = 4
 gato.color = "marron"
 
-print "El gato tiene " + str(gato.numero_de_patas) + " patas y es de color " + gato.color
+print(
+    "El gato tiene {} patas y es de color {}".format(
+        gato.numero_de_patas,
+        gato.color))
 
-print "El gato " + gato.nombre + " tiene " + str(gato.numero_de_patas) + " patas y es de color " + gato.color
+print("El gato {} tiene {} patas y es de color {} ".format(
+    gato.nombre, gato.numero_de_patas, gato.color))
 
 ################################
 # Implementación de la esfera. #
 ################################
 
-from math import pi
 
+class Esfera(object):
+    """Implementación de una clase que representa una esfera en
+    python. Define los métodos:
 
-class Esfera:
-    """Implementación de una clase que representa una esfera en python. Define
-los métodos:
-  - getRadio(self) :: Regresa el radio de la esfera
-  - superficie(self) :: Regresa el valor total de la superficie de la esfera
-  - volumen(self) :: Regresa el volumen total de la esfera
+    - getRadio(self) :: Regresa el radio de la esfera
+    - superficie(self) :: Regresa el valor total de la superficie de
+   la esfera
+    - volumen(self) :: Regresa el volumen total de la esfera
     """
 
     def __init__(self, radio=1):
-        """Método constructor, recibe el radio de la esfera. En caso de que no
-        sea provisto, este va tomar el valor de 1 por defecto."""
+        """Método constructor, recibe el radio de la esfera. En caso
+        de que no sea provisto, este va tomar el valor de 1 por
+        defecto."""
         self.radio = radio
 
     def getRadio(self):
@@ -82,7 +91,7 @@ class Perro(Animal):
         self.nombre = nombre
 
     def descripcion(self):
-        print "El perro " + self.nombre + " es de color: " + self.color
+        print("El perro {} es de color {} ".format(self.nombre, self.color))
 
 
 class Gato1(Animal):
@@ -93,8 +102,7 @@ class Gato1(Animal):
         self.patas = patas
 
     def descripcion(self):
-        print "El gato " + self.nombre + " tiene " + str(self.patas) + " patas"
-
+        print("El gato {} tiene {} patas ".format(self.nombre, self.patas))
 ################
 # Polimorfismo #
 ################
@@ -108,8 +116,8 @@ class Persona(object):
         self.apellido = apellido
 
     def __str__(self):
-        return " %s: %s, %s" % (str(self.identificacion),
-                                self.apellido, self.nombre)
+        return " {}: {} {} ".format(
+            self.identificacion, self.apellido, self.nombre)
 
 
 class Alumno(Persona):
@@ -117,9 +125,10 @@ class Alumno(Persona):
     def __init__(self, identificacion, nombre, apellido, padron):
         Persona.__init__(self, identificacion, nombre, apellido)
         self.padron = padron
+
     def __str__(self):
-        return " %s: %s, %s" % (str(self.padron), self.apellido, self.nombre)
+        return "{}: {} {}".format(self.padron, self.apellido, self.nombre)
 
 
 def imprimir(persona):
-    print persona
+    print(persona)

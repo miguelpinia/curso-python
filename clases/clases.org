@@ -12,6 +12,54 @@
   contribuir programas modulares y mantenibles.
 - Ser capaz de escribir programas usando clases.
 
+* Objetos
+
+Antes que nada, en Python, todas las cosas son un
+objeto, y al menos casi todas las cosas dentro del
+lenguaje tienen atributos y métodos. Incluso las
+funciones tienen un atributo __doc__, el cuál regresa
+el docstring definido en el código fuente de la
+función.
+
+Aún así, esto no nos responde la pregunta ¿Qué es un
+objeto? Diferentes lenguajes de programación definen
+objeto de diferentes formas. En algunos esto significa
+qué todo objeto es un ente que tiene un determinado
+estado, comportamiento e identidad, donde el estado
+está representado por los atributos de los que está
+compuesto y métodos que representa su comportamiento.
+
+* Objetos
+
+En python, la definición es un poco más simple: algunos
+objetos pueden no tener atributos ni métodos ni todos
+los objetos son *subclasables*. Pero todo va a ser un
+objeto en el sentido de que puede ser asignado a una
+variable y puede ser usado como argumento de una
+función.
+
+En clases anteriores hemos estado usando los objetos de
+forma indiscriminada, ya sea que los hayamos estado
+usando como parte de un script (archivo /.py/) o dentro
+de nuestro intérprete. Por ejemplo:
+
+#+begin_src python
+a = 1 + 4j
+a.conjugate()
+a.real
+a.imag
+
+b = "Foo Bar Baz"
+b.split()
+b.capitalize()
+#+end_src
+
+En general, los objetos los vamos a utilizar para
+representar entes que contengan atributos y métodos, ya
+sean estos ejemplares de cosas que existen en la vida
+real o como parte de entidades construidas a partir de
+la abstracción de un término general.
+
 * ¿Qué es una clase?
 
 Es un modelo sobre el cual vamos a construir nuestros
@@ -23,8 +71,6 @@ objeto).
 - Nota :: El nombre de las clases se define en singular
      usando notación [[https://es.wikipedia.org/wiki/CamelCase][CamelCase]].
 
-* ¿Cómo definimos una clase?
-
 La forma de definir clases a través del lenguaje Python
 es haciendo uso de la palabra reservada *class*, seguida
 del nombre que se le quiera asignar a la clase, seguido
@@ -33,13 +79,15 @@ de dos puntos.
 *Ejemplo:*
 
 #+begin_src python
-class Foo:
+class Estudiante(object):
     pass
 
-class Bar:
+class EstudianteMatematicas(Estudiante):
+    pass
+
+class EstudianteComputacion(Estudiante):
     pass
 #+end_src
-
 
 * Atributos
 
@@ -49,13 +97,18 @@ algunas propiedades que permitan definirlas. Esto lo
 vamos a hacer de la siguiente forma:
 
 #+begin_src python
-class Foo:
-    a = 1
-    b = "Soy Foo"
+class Estudiante(object):
+    nombre = "Miguel"
+    edad = 26
+
+class EstudianteMatematicas(Estudiante):
+    le_gusta_topologia = True
+    le_gusta_algebra = False
 #+end_src
 
 Los atributos de una clase pueden ser tantos como
-necesitemos, por lo que no hay un límite.
+necesitemos, por lo que no hay un límite en el número
+de atributos que puede tener una clase.
 
 * ¿Cómo instanciar una clase?
 
@@ -70,11 +123,16 @@ que hacer, es asignar a una variable el nombre de la
 clase seguido de paréntesis. *Ejemplo:*
 
 #+begin_src python
-class Gato:
-   numero_de_patas = 0
-   color = "negro"
+class Estudiante(object):
+    nombre = "Miguel"
+    edad = 26
 
-gato = Gato()
+class EstudianteMatematicas(Estudiante):
+    le_gusta_topologia = True
+    le_gusta_algebra = False
+
+estudiante = Estudiante()
+estudiante_mate = EstudianteMatematicas()
 #+end_src
 
 * Modificando atributos
@@ -86,17 +144,24 @@ que invocarla siguiendo las siguiente estructura:
 nombre_objeto.nombre_atributo
 #+end_src
 
-Usando el ejemplo del gato podemos hacer lo siguiente:
+Usando el ejemplo anterior podemos hacer lo siguiente:
 
 #+begin_src python
-class Gato:
-   numero_de_patas = 0
-   color = "negro"
+class Estudiante(object):
+    nombre = "Miguel"
+    edad = 26
 
-gato = Gato()
-gato.numero_de_patas = 4
-color = "marron"
-print "El gato tiene " + str(gato.numero_de_patas) " patas y es de color " + gato.color
+class EstudianteMatematicas(Estudiante):
+    le_gusta_topologia = True
+    le_gusta_algebra = False
+
+estudiante = Estudiante()
+estudiante_mate = EstudianteMatematicas()
+estudiante.nombre = "Juan"
+estudiante_mate.le_gusta_topologia = False
+
+print("Nombre del estudiante 1: {}".format(estudiante.nombre))
+print("Le gusta topologia: {}".format(estudiante_mate.le_gusta_topologia))
 #+end_src
 
 * Acciones
@@ -110,18 +175,38 @@ clases. Para definir un método, basta con hacer lo
 siguiente:
 
 #+begin_src python
-class Gato:
-   numero_de_patas = 0
-   color = "negro"
+class Estudiante(object):
+    nombre = "Miguel"
+    edad = 26
 
-   def dormir(self):
-       print "Zzzz..."
+    def puede_inscribir(self):
+        print(self.nombre)
+        return True
 
-   def molestar_humano(self):
-       while True:
-           acariciar = raw_input("Acariciame")
-           if acariciar == "Acariciado":
-               break
+    def imprime_informacion(self):
+        print("Nombre: {}\nEdad: {}".format(self.nombre, self.edad))
+
+class EstudianteMatematicas(Estudiante):
+    le_gusta_topologia = True
+    le_gusta_algebra = False
+    calificaciones = []
+
+    def calcula_promedio(self, calificaciones=[]):
+        promedio = 0
+        if len(self.calificaciones) >= 0:
+            calificaciones = self.calificaciones
+        for calificacion in calificaciones:
+            promedio += calificacion
+        return promedio / len(calificaciones)
+
+e = Estudiante()
+print(e.puede_inscribir())
+e.imprime_informacion()
+
+em = EstudianteMatematicas()
+em.calificaciones = [10, 10, 9, 8, 10, 10]
+promedio = em.calcula_promedio()
+print("Promedio del estudiante de matemáticas: {}".format(promedio))
 #+end_src
 
 * Notas acerca de los métodos
@@ -136,23 +221,41 @@ class Gato:
 
 * Método __init__
 
-En python, el método __init__ sirve como constructor de
-una clase y nos permite asignar valores a los atributos
-de una clase al momento de que estas se instancian.
+
+En python, el método __init__ es un método especial de
+las clases. El objetivo de este método es inicializar
+los atributos de nuestra clase. A este método se le
+conoce *método constructor*, el cuál sirve para asignar e
+inicializar los valores de los atributos de una clase
+al momento de que estas se instancian.
 
 Ejemplo:
 
 #+begin_src python
-class Gato:
-    numero_de_patas = 0
-    color = "negro"
-    def __init__(self, nombre):
+class Estudiante(object):
+
+    def __init__(self, nombre = "Miguel", edad = 26):
         self.nombre = nombre
+        self.edad = edad
 
-gato = Gato("Juan")
+    def puede_inscribir(self):
+        print(self.nombre)
+        return True
 
-print "El gato " + gato.nombre + " tiene " + str(gato.numero_de_patas) + " patas y es de color " + gato.color
+    def imprime_informacion(self):
+        print("Nombre: {}\nEdad: {}".format(self.nombre, self.edad))
 #+end_src
+
+* Constructores
+
+Otras características de los constructores son:
+- El constructor se ejecuta inmediatamente luego de crear
+  un objeto y no puede ser llamado nuevamente.
+- Un constructor no puede retornar dato.
+- Un constructor puede recibir parámetros que se utilizan
+  normalmente para inicializar atributos.
+- El constructor es un método opcional, de todos modos es
+  una buena práctica de programación definirlo
 
 
 * Ejercicio

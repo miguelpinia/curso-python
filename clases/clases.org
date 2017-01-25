@@ -286,25 +286,26 @@ Ejemplo:
 
 #+begin_src python
 class Animal(object):
-    nombre = ""
+    def __init__(self, nombre):
+        self.nombre = nombre
 
 class Perro(Animal):
-    color = ""
+
     def __init__(self, nombre, color):
+        Animal.__init__(self, nombre)
         self.color = color
-        self.nombre = nombre
 
     def descripcion(self):
-        print "El perro " + self.nombre + " es de color: " + self.color
+        print("El perro {} es de color: {}".format(self.nombre, self.color))
 
 class Gato(Animal):
-    patas = 0
+
     def __init__(self, nombre, patas = 4):
-        self.nombre = nombre
+        Animal.__init__(self, nombre)
         self.patas = patas
 
     def descripcion(self):
-        print "El gato " + self.nombre + " tiene " + str(self.patas)
+        print("El gato {} tiene {} patas".format(self.nombre, self.patas))
 #+end_src
 
 * Polimorfismo
@@ -326,9 +327,9 @@ class Persona(object):
         self.identificacion = identificacion
         self.nombre = nombre
         self.apellido = apellido
+
     def __str__(self):
-        return " %s: %s, %s" %
-            (str(self.identificacion), self.apellido, self.nombre)
+        return "{}: {}, {}".format(self.identificacion,self.apellido, self.nombre)
 
 class Alumno(Persona):
     def __init__(self, identificacion, nombre, apellido, padron):
@@ -336,11 +337,11 @@ class Alumno(Persona):
         self.padron = padron
 
     def __str__(self):
-        return " %d: %s, %s" %
-            (str(self.padron), self.apellido, self.nombre)
+        return "{}: {}, {}".format(self.padron, self.apellido, self.nombre)
+
 
 def imprimir(persona):
-    print persona
+    print(persona)
 # Imprimir persona y alumno
 #+end_src
 
@@ -366,39 +367,53 @@ mismo para las variable.
 #+begin_src python
 class Persona(object) :
     "Calse Persona"
+
     def __init__(self, pNombre,pEdad,pSueldo) :
         self.setNombre(pNombre)
         self.setEdad(pEdad)
-        self.__setSueldo(pSueldo);
+        self.__setSueldo(pSueldo)
+
     def setEdad(self, pEdad) :
         self.__edad = pEdad
+
     def getEdad(self) :
         return self.__edad
+
     def setNombre(self, pNombre) :
         self.__nombre = pNombre
+
     def getNombre(self) :
         return self.__nombre
+
     def __setSueldo(self,pSueldo):
         self.__sueldo = pSueldo
+
     def getSueldo(self):
         return self.__sueldo
+
     nombre = property(getNombre, setNombre)
     edad = property(getEdad, setEdad)
+
 class Gerente(Persona) :
     def __init__(self, pNombre,pEdad):
         Persona.__init__(self, pNombre,pEdad,5000)
+
 class Secretaria(Persona) :
     def __init__(self, pNombre,pEdad) :
         Persona.__init__(self, pNombre,pEdad,500)
+
 if __name__ == '__main__':
     g = Gerente("Juan", 56)
     s  = Secretaria("Rocio", 33)
+
     print "El Gerente es", g.nombre , " gana ", g.getSueldo()
     print "La Secretaria es ", s.getNombre(), " gana ",s.getSueldo
 #+end_src
 
-Veran que la clase Persona hereda de object esto es asi por que tiene que usar propiedades.
-También varan que el objeto “g” imprime su nombre por medio de su propiedad.
+Veran que la clase Persona hereda de object esto es asi
+por que tiene que usar propiedades.  También varan que
+el objeto "g" imprime su nombre por medio de su
+propiedad.
 
 * Excepciones
 Los errores de ejecución son llamados comúnmente
@@ -437,9 +452,8 @@ cociente = dividendo / divisor
 try:
      cociente = dividendo / divisor
 except:
-    print "No se permite la división por cero"
+    print("No se permite la división por cero")
 #+end_src
-
 * Excepciones
 
 Pero además de lo anterior, un mismo bloque puede
@@ -474,8 +488,6 @@ try:
 except IOError:
     print "Error de entrada/salida."
     # realizar procesamiento adicional
-except:
-    # procesar la excepción
 finally:
     # si el archivo no está cerrado hay que cerrarlo
     if not(archivo.closed):
@@ -496,7 +508,7 @@ continuación:
 - Comprobaciones por contenido
 - Validación de entrada del usuario
 - Comprobaciones de tipo
-- Comprobaciones por característicsa
+- Comprobaciones por características
 
 * Comprobación por contenido
 

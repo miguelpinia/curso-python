@@ -416,6 +416,7 @@ el objeto "g" imprime su nombre por medio de su
 propiedad.
 
 * Excepciones
+
 Los errores de ejecución son llamados comúnmente
 excepciones y por eso de ahora en más utilizaremos ese
 nombre.
@@ -431,11 +432,11 @@ ejecución del programa.
 * Excepciones
 
 En el caso de Python, el manejo de excepciones se hace
-mediante los bloques que utilizan las sentencias try,
-except y finally.
+mediante los bloques que utilizan las sentencias *try*,
+*except* y *finally*.
 
-Dentro del bloque try se ubica todo el código que pueda
-llegar a levantar una excepción, se utiliza el término
+Dentro del bloque *try* se ubica todo el código que pueda
+llegar a levantar una *excepción*, se utiliza el término
 levantar para referirse a la acción de generar una
 excepción.a
 
@@ -534,30 +535,29 @@ def lee_entero():
         correctamente, y de no ser así, lanza una excepción. """
     intentos = 0
     while intentos < 5:
-        valor = raw_input("Ingrese un número entero: ")
+        valor = input("Ingrese un número entero: ")
         try:
             valor = int(valor)
             return valor
         except ValueError:
             intentos += 1
-    raise ValueError, "Valor incorrecto ingresado en 5 intentos"
+    raise ValueError("Valor incorrecto ingresado en 5 intentos")
 #+end_src
 
 * Comprobaciones por tipo
 
 #+begin_src python
-if type(i) not in (int, float, long, complex):
-    raise TypeError, "i debe ser numérico"
+if type(i) not in (int, float, complex):
+    raise TypeError("i debe ser numérico")
 #+end_src
 
 #+begin_src python
-if not isinstance(i, (int, float, long, complex) ):
-    raise TypeError, "i debe ser numérico"
+if not isinstance(i, (int, float, complex) ):
+    raise TypeError("i debe ser numérico")
 #+end_src
 
 * Comprobaciones por características
-
 #+begin_src python
 if not hasattr(i,"__add__"):
-    raise TypeError, "El elemento no es sumable"
+    raise TypeError("El elemento no es sumable")
 #+end_src

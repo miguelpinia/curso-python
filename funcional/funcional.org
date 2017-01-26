@@ -54,9 +54,9 @@ f2()
 
 #+begin_src python
 def f1():
-    print "Función 1"
+    print("Función 1")
 def f2():
-    print "Funcion 2"
+    print("Funcion 2")
 def superior(funcion):
     funcion()
 
@@ -68,17 +68,13 @@ superior(f2)
 def saludar(lang):
     def saludar_es():
         print("Hola a todos")
-
     def saludar_en():
         print("Hi all")
-
     def saludar_fr():
         print("Bonjour à tous ")
-
     lang_func = {"es": saludar_es,
                  "en": saludar_en,
                  "fr": saludar_fr}
-
     return lang_func[lang]
 
 f = saludar("fr")
@@ -89,13 +85,10 @@ f()
 def conversor(sis):
     def sis_bin(numero):
         print('dec: {} bin: {}'.format(numero, bin(numero)))
-
     def sis_oct(numero):
         print('dec: {} oct {}'.format(numero, oct(numero)))
-
     def sis_hex(numero):
         print('dec: {} hex: {}'.format(numero, hex(numero)))
-
     sis_func = {'bin': sis_bin, 'oct': sis_oct, 'hex': sis_hex}
     return sis_func[sis]
 
@@ -104,7 +97,7 @@ conversorhex(10)
 conversorbin = conversor('bin')
 conversorbin(10)
 conversoroct = conversor('oct')
-conversoroct(10
+conversoroct(10)
 #+end_src
 * Funciones lambda
 
@@ -123,20 +116,20 @@ for numero in lista:
 * Funciones lambda
 
 #+begin_src python
-def make_incrementor (n): return lambda x: x + n
+def make_incrementor(n): return lambda x: x + n
 f = make_incrementor(2)
 g = make_incrementor(6)
-print f(42), g(42)
-print make_incrementor(22)(33)
+print(f(42), g(42))
+print(make_incrementor(22)(33))
 #+end_src
 
 * Funciones lambda
 
 #+begin_src python
-nums = range(2, 50)
+nums = list(range(2, 50))
 for i in range(2, 8):
-    nums = filter(lambda x: x == i or x % i, nums)
-print nums
+    nums = list(filter(lambda x: x == i or x % i, nums))
+print(nums)
 #+end_src
 
 * Listas por comprensión
@@ -160,7 +153,6 @@ puede ser filtrada.
 #+end_src
 
 * Listas por comprensión
-
 Dar una lista donde cada elemento es la longitud de
 cada una de las palabras de una oración.
 
@@ -265,7 +257,7 @@ devuelve una lista con los resultados de aplicar la
 función a cada elemento.
 
 #+begin_src python
-lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+lista = list(range(10))
 lista_nueva = list(map(lambda x: x ** 3, lista))
 print(lista_nueva)
 #+end_src

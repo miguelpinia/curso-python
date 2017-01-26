@@ -40,11 +40,16 @@ de estas funciones son funciones.
 #+begin_src python
 def superior(interna):
     def f1():
-        print "Función 1"
+        print("Función 1")
     def f2():
-        print "Funcion 2"
+        print("Funcion 2")
     funcion = {"uno" : f1, "dos" : f2}
     return funcion[interna]
+
+f1 = superior("uno")
+f2 = superior("dos")
+f1()
+f2()
 #+end_src
 
 #+begin_src python
@@ -59,6 +64,48 @@ superior(f1)
 superior(f2)
 #+end_src
 
+#+begin_src python
+def saludar(lang):
+    def saludar_es():
+        print("Hola a todos")
+
+    def saludar_en():
+        print("Hi all")
+
+    def saludar_fr():
+        print("Bonjour à tous ")
+
+    lang_func = {"es": saludar_es,
+                 "en": saludar_en,
+                 "fr": saludar_fr}
+
+    return lang_func[lang]
+
+f = saludar("fr")
+f()
+#+end_src
+
+#+begin_src python
+def conversor(sis):
+    def sis_bin(numero):
+        print('dec: {} bin: {}'.format(numero, bin(numero)))
+
+    def sis_oct(numero):
+        print('dec: {} oct {}'.format(numero, oct(numero)))
+
+    def sis_hex(numero):
+        print('dec: {} hex: {}'.format(numero, hex(numero)))
+
+    sis_func = {'bin': sis_bin, 'oct': sis_oct, 'hex': sis_hex}
+    return sis_func[sis]
+
+conversorhex = conversor('hex')
+conversorhex(10)
+conversorbin = conversor('bin')
+conversorbin(10)
+conversoroct = conversor('oct')
+conversoroct(10
+#+end_src
 * Funciones lambda
 
 Son funciones anónimas, mínimas de una linea, no pueden
@@ -101,16 +148,21 @@ puede ser filtrada.
 
 *Crear una lista de cuadrados de los primeros 10 números
  naturales*
+
 #+begin_src python
 [numero ** 2 for numero in range(10)]
 #+end_src
 
-*Crear una lista de numeros pares*
+*Crear una de cuadrados de los primeros 10 números pares*
+
 #+begin_src python
 [numero ** 2 for numero in range(20) if numero % 2 == 0]
 #+end_src
 
 * Listas por comprensión
+
+Dar una lista donde cada elemento es la longitud de
+cada una de las palabras de una oración.
 
 #+begin_src python
 oracion = "El zorro café salta rápidamente sobre el perro perezoso."
@@ -150,7 +202,7 @@ def recorre(lista):
 
 gen = recorre([1, "a", 2, "hola"])
 
-gen.next()
+next(gen)
 #+end_src
 
 * Generadores
@@ -159,7 +211,7 @@ Crea un generador de los primeros 10 números pares.
 
 #+begin_src python
 gen_pares = (p for p in range(20) if p % 2 == 0)
-gen_pares.next()
+next(gen_pares)
 #+end_src
 
 * Ejercicio
@@ -171,6 +223,7 @@ comenzar a generar los números primos.
 * Resultado
 
 #+begin_src python
+import math
 def es_primo(numero):
     if numero > 1:
         if numero == 2:
@@ -190,8 +243,20 @@ def obten_primos(numero = 0):
         numero += 1
 
 f = obten_primos()
+next(f)
 #+end_src
 
+#+begin_src python
+def es_primo(candidato):
+  divisibility = (candidato % n != 0 for n in range(2, candidato))
+  return all(divisibility)
+
+def es_primo(candidato):
+  return all(candidato % n != 0 for n in range(2, candidato))
+#+end_src
+
+La función regresa verdadero, si todos sus elementos
+son verdaderos
 
 * Map
 
@@ -201,8 +266,8 @@ función a cada elemento.
 
 #+begin_src python
 lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-lista_nueva = map(lambda x: x ** 3, lista)
-print lista_nueva
+lista_nueva = list(map(lambda x: x ** 3, lista))
+print(lista_nueva)
 #+end_src
 
 * Map
@@ -216,7 +281,7 @@ print points
 #+end_src
 
 #+begin_src python
-print map(lambda x: x.split()[2], commands.getoutput('mount -v').splitlines())
+print(list(map(lambda x: x.split()[2], commands.getoutput('mount -v').splitlines())))
 #+end_src
 
 
@@ -228,9 +293,10 @@ reductora, devolviendo un único valor con el resultado
 de aplicar dicha función reductora.
 
 #+begin_src python
+from functools import reduce
 lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 suma = reduce(lambda x, y: x + y, lista)
-print suma
+print(suma)
 #+end_src
 
 * Filter
@@ -242,7 +308,7 @@ función booleana.
 #+begin_src python
 lista = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 pares = filter(lambda x: x % 2 == 0, lista)
-print pares
+print(list(pares))
 #+end_src
 
 * Zip
@@ -255,5 +321,5 @@ y los une en una tupla, luego hace una lista de ellas.
 animal = ["conejo", "gato", "liebre", "oruga", "pajaro"]
 nombre = ["blanco", "de chesire", "de marzo", "azul", "dodo"]
 personajes = zip(animal, nombre)
-print personajes
+print(list(personajes))
 #+end_src

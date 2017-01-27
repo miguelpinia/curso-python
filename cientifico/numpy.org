@@ -8,7 +8,6 @@
 - Conocer más sobre las herramientas provistas por numpy
   para el cálculo científico.
 
-
 * ¿Qué es Numpy?
 
 Numpy es una biblioteca para realizar computo
@@ -34,6 +33,13 @@ corchetes cuadrados.
 #+begin_src python
 a = np.array([1, 2, 3])
 #+end_src
+
+#+begin_src sh
+sudo apt-get install python3-numpy # Ubuntu
+sudo yum install python3-numpy # Fedora
+sudo dnf install python3-numpy # Fedora
+#+end_src
+
 
 Los arreglos van a tener las siguiente funciones:
 
@@ -95,7 +101,6 @@ de nuestro problema escogeremos la opción más adecuada.
      se toma por defecto como flotante.
 - ones(shape,dtype) :: Crea un array de unos compuesto de
      shape elementos.
-
 - zeros(shape, dtype) :: Crea un array de ceros compuesto
      de "shape" elementos.
 - empty(shape, dtype) :: Crea un array de ceros compuesto
@@ -142,6 +147,7 @@ de nuestro problema escogeremos la opción más adecuada.
   f = np.meshgrid(a,b)
   print(f)
 #+end_src
+
 * Arreglos
 
 Podemos sacar secciones de matriz y ponerlos en otras variables.
@@ -188,7 +194,7 @@ Integer array indexing
 
   # When using integer array indexing, you can reuse the same
   # element from the source array:
-  print(a [[0, 0], [1, 1]])  # Prints "[2 2]"
+  print(a[[0, 0], [1, 1]])  # Prints "[2 2]"
 
   # Equivalent to the previous integer array indexing example
   print(np.array([a[0, 1], a[0, 1]]))  # Prints "[2 2]"
@@ -266,7 +272,8 @@ Podemos realizar operaciones como en matlab con las matrices.
 
 Numpy ofrece herramientas para realizar producto
 punto. En el caso de los arreglos bidimensionales,
-produce el producto punto la función .dot.
+la función np.dot produce la multiplicación normal de
+matrices.
 
 #+begin_src python
   import numpy as np
@@ -325,8 +332,8 @@ de cada uno de las matrices.
   y = np.empty_like(x)   # Create an empty matrix with the same shape as x
 
   # Add the vector v to each row of the matrix x with an explicit loop
-  for i in range(4):
-      y[i, :] = x[i, :] + v
+for i in range(4):
+    y[i, :] = x[i, :] + v
 
   # Now y is the following
   # [[ 2  2  4]
@@ -363,8 +370,8 @@ científicas y de ingeniería.
 Para instalarlo dentro de nuestro entorno, basta con hacer
 
 #+begin_src sh
-pip install scipy
-pip install pillow
+sudo apt-get install python3-scipy #ubuntu,
+sudo yum install python3-scipy #fedora
 #+end_src
 
 * Scipy
